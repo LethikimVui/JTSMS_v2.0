@@ -1,0 +1,26 @@
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\Services.dll.config
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\Services.dll
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\Services.pdb
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\Newtonsoft.Json.dll
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\SharedObjects.dll
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\SharedObjects.pdb
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\SharedObjects.dll.config
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\Newtonsoft.Json.xml
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\obj\Release\Services.csprojAssemblyReference.cache
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\obj\Release\Services.csproj.CoreCompileInputs.cache
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\obj\Release\Services.csproj.CopyComplete
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\obj\Release\Services.dll
+C:\Users\1099969\OneDrive - Jabil\Desktop\Development_Project\Web\GitHub\JTSMS\JTSMS-V1\Services\obj\Release\Services.pdb
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\Services.dll.config
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\Services.dll
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\Services.pdb
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\Newtonsoft.Json.dll
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\SharedObjects.dll
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\SharedObjects.pdb
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\SharedObjects.dll.config
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\bin\Release\Newtonsoft.Json.xml
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\obj\Release\Services.csproj.AssemblyReference.cache
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\obj\Release\Services.csproj.CoreCompileInputs.cache
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\obj\Release\Services.csproj.CopyComplete
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\obj\Release\Services.dll
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS\JTSMS-V1\Services\obj\Release\Services.pdb

@@ -1,0 +1,28 @@
+﻿@model List<JTSMS.Models.EquipmentViewModel>;
+
+<form>
+    <table class="table table-bordered table-hover table-striped table-responsive">
+        <thead>
+            <tr class="text-center bold">
+                <th>Equipment_ID</th>
+                <th>CommonName</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.Equipment_ID</td>
+                <td>@item.CommonName</td>
+                <td class="text-center">
+                    <button id="btn-select" type="button" class="btn green select" data-name="@item.CommonName" data-id="@item.Equipment_ID">Select</button>
+                </td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+
+</form>

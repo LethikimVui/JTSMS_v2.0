@@ -1,0 +1,75 @@
+﻿@model List<SharedObjects.ValueObjects.VRoute>;
+
+@{
+    ViewData["Title"] = "Administration - Approval";
+    var Routes = ViewData["Routes"] as IEnumerable<SharedObjects.ValueObjects.VRoute>;
+
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light" style="min-height: auto !important;height: auto !important">
+                <div class="portlet-title">
+                    <div class="caption col-md-12">
+                        <span class="caption-subject font-green-sharp bold uppercase">
+                            Administration - Approval
+                        </span>
+                    </div>
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr class="text-center bold">
+                                <td>RouteId</td>
+                                <td>Route Name</td>
+                                <td style="width:100px">Modification</td>
+                            </tr>
+                        </thead>
+                        <tbody id="table-data">
+                            @*<tr class="text-center">
+                                    <td>
+                                        <select class="form-control" id="txt-roleId" required>
+                                            <option value="">--Please Select--</option>
+                                            @foreach (var item in Routes.OrderByDescending(c => c.RouteId).ToList())
+                                            {
+                                                <option value=@item.RouteId>@item.RouteName</option>
+                                            }
+                                        </select>
+                                    </td>
+                                </tr>*@
+                            @foreach (var item in Model)
+                            {
+                                <tr class="text-center">
+                                    <td id="">@item.RouteId</td>
+                                    <td id="">@item.RouteName</td>
+                                    <td class="text-center">
+                                        <a id="btn-detail" class="btn default btn-xs purple" data-id="@item.RouteId" data-routename="@item.RouteName" title="Detail"> <span class="glyphicon glyphicon-new-window"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                    <div class="portlet light table-responsive col-md-12 " id="detail" style="display:none; min-height: auto !important;">
+                        <div class="caption col-md-12">
+                            <span id="lbl-title" class="caption-subject font-green-sharp bold uppercase">
+
+                            </span>
+                        </div>
+                        <div id="tbl-detail" class="table-responsive col-md-12">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script src="~/js/admin-approval.js"></script>
+
+}

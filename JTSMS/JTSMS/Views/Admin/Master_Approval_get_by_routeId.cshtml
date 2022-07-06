@@ -1,0 +1,79 @@
+﻿@model List<SharedObjects.ValueObjects.VMasterApproval>;
+
+@{
+    var Customers = ViewData["customers"] as IEnumerable<SharedObjects.ValueObjects.VCustomer>;
+
+}
+<table class="table table-bordered table-hover table-striped table-responsive">
+    <thead>
+        <tr class="text-center bold">
+            <th>Customer</th>
+            <th>NTLogin</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Modification</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="text-center">
+            <td>
+                <select class="form-control" id="txt-custid">
+                    <option value="">--Please Select--</option>
+                    @foreach (var item in Customers.OrderByDescending(c => c.CustId).ToList())
+                    {
+                        <option value=@item.CustId>@item.CustName</option>
+                    }
+                </select>
+            </td>
+            <td>
+                <input id="txt-Ntlogin" type="text" class="form-control" data-toggle="modal" href="#modal-search" style="height:30px" />
+            </td>
+            <td id="txt-userName"></td>
+            <td id="txt-userEmail"></td>
+            <td class="text-center">
+                <a id="btn-add" class="btn default btn-xs purple"><span class="glyphicon glyphicon-plus"></span></a>
+            </td>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CustName</td>
+                <td>@item.NTLogin</td>
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+                <td class="text-center">
+                    <a id="btn-delete" class="btn default btn-xs purple" data-username="@item.Name" data-approvalId="@item.ApprovalId"><span class="glyphicon glyphicon-minus"></span></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="modal-area">
+    <div class="modal fade" id="modal-search" tabindex="-1" role="columnheader" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Search User </h4>
+                    <p hidden id="hid-UserId"></p>
+                </div>
+                <form class="modal-body" id="frm-save">
+                    <div class="form-group">
+                        <label for="txt-CourseName">NTID</label>
+                        <input type="text" class="form-control" id="txt-search-input" style="color:mediumvioletred">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btn-search-input" class="btn green">Search</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!--Kết thúc Modal thêm, update-->
+
+</div>

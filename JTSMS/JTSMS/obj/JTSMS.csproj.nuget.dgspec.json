@@ -1,0 +1,147 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\JTSMS\\JTSMS.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\JTSMS\\JTSMS.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\JTSMS\\JTSMS.csproj",
+        "projectName": "JTSMS",
+        "projectPath": "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\JTSMS\\JTSMS.csproj",
+        "packagesPath": "C:\\Users\\1099969\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\JTSMS\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\1099969\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\Services\\Services.csproj": {
+                "projectPath": "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\Services\\Services.csproj"
+              },
+              "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\SharedObjects\\SharedObjects.csproj": {
+                "projectPath": "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\SharedObjects\\SharedObjects.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.24, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[3.1.24, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[6.17.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "System.Data.OleDb": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "System.DirectoryServices": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "System.DirectoryServices.AccountManagement": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.17.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.409\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\Services\\Services.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\Services\\Services.csproj",
+        "projectName": "Services",
+        "projectPath": "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\Services\\Services.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\SharedObjects\\SharedObjects.csproj": {
+                "projectPath": "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\SharedObjects\\SharedObjects.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\SharedObjects\\SharedObjects.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\SharedObjects\\SharedObjects.csproj",
+        "projectName": "SharedObjects",
+        "projectPath": "C:\\Users\\1099969\\Desktop\\Development\\GitHub\\JTSMS_v2.0\\JTSMS\\SharedObjects\\SharedObjects.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    }
+  }
+}

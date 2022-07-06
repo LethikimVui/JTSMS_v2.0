@@ -1,0 +1,126 @@
+﻿@model SharedObjects.ViewModels.ConfigViewModel
+
+@{
+    ViewData["Title"] = "WatchDogConfig_insert";
+    var Customers = ViewData["Customer"] as IEnumerable<SharedObjects.ValueObjects.VCustomer>;
+    var RouteStep = ViewData["RouteStep"] as IEnumerable<SharedObjects.ValueObjects.VRouteStep>;
+
+}
+
+<div class="row">
+    <div class="col-md-offset-0">
+        <div class="portlet light col-md-10 col-md-offset-1">
+            <div class="portlet green">
+                <h2 style="font:bold; text-align:center">WatchDog Configuration</h2>
+            </div>
+            <form id="frm-add">
+
+                <div class="form-group col-md-3">
+                    <label class="control-label">Customer</label>
+                    <select class="form-control" id="txt-customer" name="customer" style="color:mediumvioletred">
+                        <option value="">--Please Select--</option>
+                        @foreach (var item in Customers.OrderByDescending(c => c.CustName).ToList())
+                        {
+                            <option value=@item.CustId>@item.CustName</option>
+                        }
+                    </select>
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="control-label">Process Step</label>
+                    <input id="txt-processstep" name="processstep" class="form-control" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="control-label">Route Step</label>
+                    <input id="txt-routestep" name="routestep" class="form-control" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="control-label">Platform</label>
+                    <select class="form-control" id="txt-platform" name="platform" style="color:mediumvioletred">
+                        <option value="">--Please Select--</option>
+                        <option value=1>JEMSts </option>
+                        <option value=2>Jabil Test</option>
+                    </select>
+                </div>
+                @*<div class="form-group col-md-3">
+                        <label asp-for="AssyNumber" class="control-label"></label>
+                        <input asp-for="AssyNumber" class="form-control" />
+                        <span asp-validation-for="AssyNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label asp-for="AssyRev" class="control-label"></label>
+                        <input asp-for="AssyRev" class="form-control" />
+                        <span asp-validation-for="AssyRev" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group col-md-3">
+                    <label class="control-label">Tester Name</label>
+                    <input id="txt-testername" name="testername" class="form-control" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="control-label">Tester PC Name</label>
+                    <input id="txt-testerpcname" name="testerpcname" class="form-control" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="control-label">Equipment</label>
+                    <input id="txt-equipmentid" name="equipmentid" class="form-control" data-toggle="modal" href="#modal-search" readonly/>
+                    @*<a id="btn-search" class="btn default btn-xs purple update" title="Search"> <span class="glyphicon glyphicon-search"></span></a>*@
+
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="control-label">Test Time</label>
+                    <input type="number" id="txt-testtime" name="testtime" class="form-control" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="control-label">Is WatchDog Trigger ?</label>
+                    <input type="checkbox" id="txt-trigger" class="form-control" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input id="btn-add" value="Add" class="btn btn-default" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal-area">
+    <div class="modal fade" id="modal-search" tabindex="-1" role="columnheader" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Search Equipment</h4>
+                    <p hidden id="hid-UserId"></p>
+                </div>
+                <form class="modal-body" id="frm-save">
+                    <div class="form-group">
+                        <label for="">Equipment Name</label>
+                        <input type="text" class="form-control" id="txt-search-input" style="color:mediumvioletred">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btn-search-input" class="btn green">Search</button>
+                        @*<button type="button" id="btn-test" class="btn green">Test</button>
+                        <button type="button" id="btn-test1" class="btn green">Test1</button>*@
+                    </div>
+                    <div id="tbl-result">
+                       
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!--Kết thúc Modal thêm, update-->
+
+</div>
+
+@section Scripts{
+    <script src="~/js/config.js"></script>
+} 

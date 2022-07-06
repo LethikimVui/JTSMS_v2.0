@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+    var returnUrl = Context.Request.Query["ReturnUrl"];
+}
+@model SharedObjects.ViewModels.LoginViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+
+    <link href="~/assets/login/fonts/icomoon/style.css" rel="stylesheet" />
+    <link href="~/assets/login/css/owl.carousel.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link href="~/assets/login/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Style -->
+    <link href="~/assets/login/css/style.css" rel="stylesheet" />
+
+</head>
+<body>
+
+
+
+    <div class="content">
+        <div class="container">
+            <div class="row justify-content-center">
+
+                <div class="col-md-6 contents">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="form-block">
+                                <div class="mb-4">
+                                    <h3>Sign In</h3>
+
+                                </div>
+                                <form asp-action="Login" asp-controller="Account" asp-route-returnurl="@returnUrl" method="post">
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div class="form-group first">
+                                        @*<label for="username">Username</label>*@
+                                        <input asp-for="NTLogin" type="text" class="form-control" id="username" name="NTLogin" placeholder="NTLogin">
+                                        <span asp-validation-for="NTLogin" class="text-danger focus-input100"></span>
+                                    </div>
+                                    <div class="form-group last mb-4">
+                                        @*<label for="password">Password</label>*@
+                                        <input asp-for="Password" type="password" class="form-control" id="password" name="Password" placeholder="Password">
+                                        <span asp-validation-for="Password" class="text-danger focus-input100"></span>
+                                    </div>
+
+                                    <input type="submit" value="Log In" class="btn btn-pill text-white btn-block btn-primary">
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/assets/login/js/jquery-3.3.1.min.js"></script>
+    <script src="~/assets/login/js/popper.min.js"></script>
+    <script src="~/assets/login/js/bootstrap.min.js"></script>
+    <script src="~/assets/login/js/main.js"></script>
+
+</body>
+</html>

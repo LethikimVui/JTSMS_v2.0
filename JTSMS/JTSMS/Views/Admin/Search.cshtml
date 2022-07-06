@@ -1,0 +1,71 @@
+﻿@model List<SharedObjects.ValueObjects.VUserRole>;
+@{
+    var Customers = ViewData["customers"] as IEnumerable<SharedObjects.ValueObjects.VCustomer>;
+    var Roles = ViewData["roles"] as IEnumerable<SharedObjects.ValueObjects.VRole>;
+
+    ViewData["Title"] = "Administration - User";
+}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12" style="min-height: auto !important;height: auto !important;">
+
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light" style="min-height: auto !important;height: auto !important">
+                <div class="portlet-title">
+
+                    <div class="caption col-md-12">
+                        <span class="caption-subject font-green-sharp bold uppercase">
+                            Administration - User
+                        </span>
+                    </div>
+                    <div class="form-group col-md-2 pull-left">
+                        <label class="text-center bold font-green-sharp" for="">Customer</label>
+                        <select class="form-control" id="txt-customer-search" data-search="customer" name="customer" style="color:mediumvioletred">
+                            <option value="">--Please Select--</option>
+                            @foreach (var item in Customers.OrderByDescending(c => c.CustName).ToList())
+                            {
+                                <option value=@item.CustId>@item.CustName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2 pull-left">
+                        <label class="text-center bold font-green-sharp" for="">Role</label>
+                        <select class="form-control" id="txt-role-search" data-search="station" name="station" style="color:mediumvioletred">
+                            <option value=0>--Please Select--</option>
+                            @foreach (var item in Roles.OrderByDescending(c => c.RoleId).ToList())
+                            {
+                                <option value=@item.RoleId>@item.RoleName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2 pull-left">
+                        <label class="text-center bold font-green-sharp" for="">NTLogin</label>
+                        <label class="control-label"></label>
+                        <input id="txt-ntlogin-search" class="form-control col-md-3" />
+                    </div>
+                   
+                    <div class="form-group col-md-12">
+                        <a class="btn btn-success" id="btn-search">Search</a>
+                    </div>
+
+                    <div id="tbl-content" class="table-responsive col-md-12">
+
+                    </div>
+                    <div class="pagination" id="pagination">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script src="~/js/admin-user.js"></script>
+
+}

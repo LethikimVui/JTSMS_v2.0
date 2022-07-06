@@ -1,0 +1,181 @@
+﻿
+@model List<SharedObjects.ValueObjects.VUserRole>;
+@{
+    var WCs = ViewData["customers"] as IEnumerable<SharedObjects.ValueObjects.VCustomer>;
+    var Roles = ViewData["roles"] as IEnumerable<SharedObjects.ValueObjects.VRole>;
+
+    ViewData["Title"] = "Admin - User Role";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style="min-height: auto !important;height: auto !important;min-width:900px !important;width:auto !important">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light" style="min-height: auto !important;height: auto !important">
+                <div class="portlet-title">
+                    <div class="caption col-md-12">
+                        <span class="caption-subject font-green-sharp bold uppercase">
+                            Administration - User
+                        </span>
+                    </div>
+                    <form id="frm-save-debugdata-body">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr class="text-center bold">
+                                    <td>Ntlogin</td>
+                                    <td>Employee Name</td>
+                                    <td>Role</td>
+                                    <td>Workcell</td>
+                                    <td>Created By</td>
+                                    <td>Creation Date</td>
+                                    <td>Updated By</td>
+                                    <td>Update Date</td>
+                                    <td style="width:100px">Modification</td>
+                                </tr>
+                            </thead>
+                            <tbody id="table-data">
+
+                                <tr class="text-center">
+                                    <td>
+                                        <input id="txt-Ntlogin" type="text" class="form-control" data-toggle="modal" href="#modal-search" style="height:30px" />
+                                        @*<input id="txt-Ntlogin" type="text" class="form-control" tyle="height:30px" />*@
+                                    </td>
+                                    <td id="txt-userName"></td>
+                                    <td>
+                                        <select class="form-control" id="txt-roleId" required>
+                                            <option value="">--Please Select--</option>
+                                            @foreach (var item in Roles.Where(c => c.RoleId != 4).OrderByDescending(c => c.RoleId).ToList())
+                                            {
+                                                <option value=@item.RoleId>@item.RoleName</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" id="txt-custId">
+                                            <option value="">--Please Select--</option>
+                                            @foreach (var item in WCs.OrderByDescending(c => c.CustId).ToList())
+                                            {
+                                                <option value=@item.CustId>@item.CustName</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td></td>
+                                    <td></td> 
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-center">
+                                        <a id="btn-add" class="btn default btn-xs purple update" title="Add"> <span class="glyphicon glyphicon-plus"></span></a>
+                                    </td>
+                                </tr>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="text-center">
+                                        <td id="">@item.Ntlogin</td>
+                                        <td id="">@item.UserName</td>
+                                        <td id="">@item.RoleName</td>
+                                        <td id="">@item.CustName</td>
+                                        <td id="">@item.CreatedName</td>
+                                        <td id="">@item.CreationDate</td>
+                                        <td id="">@item.UpdatedName</td>
+                                        <td id="">@item.UpdateDate</td>
+                                        <td class="text-center">
+                                            <a id="btn-delete" class="btn default btn-xs red delete" data-id="@item.UserRoleId" data-ntlogin="@item.Ntlogin" title="Delete"> <span class="glyphicon glyphicon-remove"></span></a>
+                                            <a id="btn-edit" class="btn default btn-xs red edit" data-id="@item.UserRoleId" data-ntlogin="@item.Ntlogin" title="Edit" data-toggle="modal" href="#myModal"> <span class="glyphicon glyphicon-pencil"></span></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog" style="width:1000px">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Edit User Role</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+
+            <form class="modal-body" id="frm-save">
+
+                <div class="form-group">
+                    <label for="">Ntlogin</label>
+                    <label for="" class="form-control" id="txt-ntlogin" style="background-color:lightskyblue"></label>
+                </div>
+                <div class="form-group">
+                    <label for="">Employee Name</label>
+                    <label for="" class="form-control" id="txt-name" style="background-color:lightskyblue"></label>
+                </div>
+                <div class="form-group">
+                    <label for="">Role</label>
+                    <select class="form-control" id="txt-roleid">
+                        <option value="">--Please Select--</option>
+                        @foreach (var item in Roles.Where(c => c.RoleId != 4).OrderByDescending(c => c.RoleId).ToList())
+                        {
+                            <option value=@item.RoleId>@item.RoleName</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">WorkCell</label>
+                    <select class="form-control" id="txt-custid">
+                        <option value="">--Please Select--</option>
+                        @foreach (var item in WCs.OrderByDescending(c => c.CustId).ToList())
+                        {
+                            <option value=@item.CustId>@item.CustName</option>
+                        }
+                    </select>
+                </div>
+
+
+            </form>
+            <!-- Modal footer -->
+            <div class="modal-footer" id="roleId">
+                <button type="button" class="btn default" data-dismiss="modal" id="btn-save">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal-area">
+    <div class="modal fade" id="modal-search" tabindex="-1" role="columnheader" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Search User </h4>
+                    <p hidden id="hid-UserId"></p>
+                </div>
+                <form class="modal-body" id="frm-save">
+                    <div class="form-group">
+                        <label for="txt-CourseName">NTID</label>
+                        <input type="text" class="form-control" id="txt-search-input" style="color:mediumvioletred">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btn-search-input" class="btn green">Search</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!--Kết thúc Modal thêm, update-->
+
+</div>
+
+@section Scripts{
+    <script src="~/js/admin.js"></script>
+}
