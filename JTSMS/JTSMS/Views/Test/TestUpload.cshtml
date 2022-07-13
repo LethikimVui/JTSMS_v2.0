@@ -1,0 +1,59 @@
+﻿@model JTSMS.Models.MyForm;
+@{
+    ViewData["Title"] = "TestUpload";
+}
+
+<h2>TestUpload</h2>
+<div class="row mt-2">
+    @if (Model.IsResponse)
+    {
+        if (Model.IsSuccess)
+        {
+            <div class="alert alert-success">
+                @Model.Message
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                @Model.Message
+            </div>
+        }
+    }
+    <div class="col-12">
+        <label class="col-form-label">Name</label>
+        <input class="form-control" />
+        <span class="text-danger"></span>
+    </div>
+    <div class="col-12">
+        <label class="col-form-label">Select Multiple Files</label>
+        <input type="file" id="fileInput" name="file" accept=".pdf,.docx,.doc" value="" multiple>
+        <span class="text-danger"></span>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col-12">
+        <button type="submit" id="upload" class="btn btn-success">Upload Files</button>
+    </div>
+</div>
+<div id="list">
+    @*<div class="input-group">
+        <button class="destroy">X</button>
+        <p class="u">Test1</p>
+    </div>
+    <div class="input-group">
+        <button class="destroy">X</button>
+        <p class="u">Test2</p>
+    </div>
+    <div class="input-group">
+        <button class="destroy">X</button>
+        <p>head_first_design_patterns.pdf</p>
+    </div>*@
+</div>
+
+
+@section Scripts{
+
+    <script src="~/js/site.js"></script>
+
+}

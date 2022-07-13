@@ -15,9 +15,9 @@ namespace Services.Services
         {
             httpClient = new HttpClient();
 
-            //httpClient.BaseAddress = new Uri("http://localhost:40757/");
+            httpClient.BaseAddress = new Uri("http://localhost:40757/");
             //httpClient.BaseAddress = new Uri("http://vnhcmm0teapp05/jtsmsapi/");
-            httpClient.BaseAddress = new Uri("http://vnhcmm0teapp05/jtsmsapitest/");
+            //httpClient.BaseAddress = new Uri("http://vnhcmm0teapp05/jtsmsapitest/");
 
         }
     }

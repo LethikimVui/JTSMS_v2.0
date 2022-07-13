@@ -1,0 +1,47 @@
+
+edit and resubmit after rejected - done
+validate assmbly number after user key in - done
+Add PCN/ECO/ECN # and change detail - done
+User to configure watachdog - done
+
+Remove an approved test script need to go through approval process- none 
+
+
+Next Enhancement release:
+1. Add option for script of multiple assembly numbers.
+	Allow user to add multiple assembly number for a common test script per station.
+	Revise validation flow to check test script assignement for an assembly number each request ticket.
+
+- request number cho mỗi assy# hay chung cho những assy# add trước khi submit
+- request number A cho 3 assy# dùng chung test script 1 và script ID 1
+--> nếu thêm 2 assy# cần dùng chung test script 1 và script ID 1 thì add vào request A hay tạo request B mới
+
+2. Add image for change detail.
+	Allow user to attached an images as their change detail evidences and approvers are able to download and view the attachment.
+- 1 hay nhiều hình cần attach?
+- khi change thôi hay cần khi raise new request?
+
+3. Store the test scipts base on customer/process/family/assembly. Allow user to run the test script to be called by the test station.
+	VNHCMM0TEAPP05/JTSMS/Attachment/Encrypted/customer/process/assembly
+	VNHCMM0TEAPP05/JTSMS/Attachment/Origin/customer/process/assembly
+	vnhcmm0src03/JTSMS/Attachment/Encrypted/customer/process/assembly
+	if the test script is for multiple assy#, store it for each assembly number folder in the server.
+- permission needed is read and write on vnhcmm0src03/JTSMS/Attachment
+
+4. Add Assembly Test Properties Page:
+	Allow user to add Assembly Test Properties and store the JTSMS DB:
+		Type 1: Measurement Properties - KeyName, Lower Limit, Upper Limit, Measurement Unit.
+		Type 2: Information Properties - KeyName, Value.
+
+	Allow user to add/change mutiple configuration files and generate the configuration file hash string same as test script file hash string.
+	Create an approval loop same as test script change approval loop after clicking on submit button.
+- cần template dạng bảng và data cụ thể
+- approval route gồm ai? test lead & support lead?
+
+5. Add Report Pages:
+	Report SN using system with Customer filter, process filter, time frame filter - (Customer, Process, Assembly Number, Serial Number, Equipment, Script File Name, Validation result, User, Record date).
+	report SN using un-verified test script with Customer filter, process filter, time frame filter - (Customer, Process, Assembly Number, Serial Number, Equipment, MES Start Test Date, Record date).
+	report testers using watchdog with Customer filter, process filter - (Customer, Process, EquipmetName, User added, Record Date).
+	report testers which are not using watch dog with Customer filter, process filter - (Customer, Process, EquipmetName).
+6. Button Copy test script ID to clipboard.
+

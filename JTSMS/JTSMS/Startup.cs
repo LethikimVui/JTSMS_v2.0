@@ -48,6 +48,7 @@ namespace JTSMS
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAdminService, AdminService>();
             services.AddTransient<IConfigService, ConfigService>();
+            services.AddTransient<IRegistrationService, RegistrationService>();
 
         }
 
@@ -76,7 +77,7 @@ namespace JTSMS
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Request}/{action=search}/{id?}");
+                    pattern: "{controller=Registration}/{action=search}/{id?}");
             });
         }
     }

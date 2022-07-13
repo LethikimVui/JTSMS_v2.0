@@ -247,14 +247,14 @@
 
             //var selectedFile = document.getElementById('txt-file2').files[0];
 
-            var script = $('#txt-script')[0].files[0]; // get the File obect
+            var script = $('#txt-script')[0].files[0]; // get the File object
             var arr_script = script.name.split('.')
             var len_script = arr_script.length
             var extension = arr_script[len_script - 1]
             name_script = arr_script.slice(0, len_script - 1).join('.');
             name_script += '_' + date + '.' + extension;
 
-            var encrypted = $('#txt-encrypted')[0].files[0]; // get the File obect
+            var encrypted = $('#txt-encrypted')[0].files[0];
             var arr_encrypted = encrypted.name.split('.')
             var len_encrypted = arr_encrypted.length
             var extension = arr_encrypted[len_encrypted - 1]

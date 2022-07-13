@@ -1,6 +1,7 @@
 ﻿using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SharedObjects.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +27,32 @@ namespace API.Controllers
             var selectWithContain = context.Requestdetail.AsEnumerable()
                 .Where(c => Combine(c.AssemblyNumber, c.AssemblyRevision).Contains("P1095284-01 P"))
                 .ToList();
-            var t = context.Requestdetail.Include(c => c.IsActive).ToList();
+            var t = context.Requestdetail.Include(s => s.IsActive).ToList();
             return Requestdetail;
         }
         static string Combine(string firstName, string lastName)
         {
             return (firstName + " " + lastName);
         }
+
+        [HttpGet]
+        public IQueryable<VRegistration> Get()
+        {
+            var result = from registration in context.Registration
+                         join station in context.MasterStation on registration.StationId equals station.StationId
+                         join status in context.MasterStatus on registration.StationId equals status.StatusId
+                         into table
+                         from record in table.DefaultIfEmpty()
+                         select new VRegistration
+                         {
+                             CustId = registration.CustId,
+                             Station = station.Station,
+                             StatusName = record.StatusName,
+                             StatusColour = record.StatusColour
+                         };
+            return result;
+        }
     }
 }
+
+

@@ -549,3 +549,8 @@ C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\net
 C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\JTSMS.dll
 C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\JTSMS.pdb
 C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\JTSMS.genruntimeconfig.cache
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Test\Index.cshtml.g.cs
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Test\TestUpload.cshtml.g.cs
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Registration\Search.cshtml.g.cs
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Registration\Registration_get.cshtml.g.cs
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Registration\Registration_get_by_id.cshtml.g.cs

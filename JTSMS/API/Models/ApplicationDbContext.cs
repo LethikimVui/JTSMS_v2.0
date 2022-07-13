@@ -27,6 +27,10 @@ namespace API.Models
         public virtual DbSet<Requestdetail> Requestdetail { get; set; }
         public virtual DbSet<AccessUserRole> AccessUserRole { get; set; }
         public virtual DbSet<Watchdogconfig> Watchdogconfig { get; set; }
+        public virtual DbSet<Registration> Registration { get; set; }
+        public virtual DbSet<MasterStation> MasterStation { get; set; }
+        public virtual DbSet<MasterStatus> MasterStatus { get; set; }
+        public virtual DbSet<Assembly> Assembly { get; set; }
 
 
         public virtual DbQuery<VCustomer> VCustomer { get; set; }
@@ -41,6 +45,8 @@ namespace API.Models
         public virtual DbQuery<VMasterApproval> VMasterApproval { get; set; }
         public virtual DbQuery<VConfig> VConfig { get; set; }
         public virtual DbQuery<VRouteStep> VRouteStep { get; set; }
+        public virtual DbQuery<VRegistration> VRegistration { get; set; }
+        public virtual DbQuery<VRequest> VRequest { get; set; }
 
         [Obsolete]
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -428,6 +434,166 @@ namespace API.Models
                 entity.Property(e => e.TesterPcname)
                     .HasColumnName("testerPCName")
                     .HasMaxLength(45);
+            });
+            modelBuilder.Entity<Registration>(entity =>
+            {
+                entity.HasKey(e => e.RegId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("registration");
+
+                entity.HasIndex(e => e.RegId)
+                    .HasName("test");
+
+                entity.Property(e => e.RegId)
+                    .HasColumnName("regId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasColumnName("createdBy")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.CreatedEmail)
+                    .HasColumnName("createdEmail")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.CreatedName)
+                    .HasColumnName("createdName")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.CustId)
+                    .HasColumnName("custId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Family)
+                    .HasColumnName("family")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.IsActive).HasColumnName("isActive");
+
+                entity.Property(e => e.PlatformId)
+                    .HasColumnName("platformId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.RouteStep)
+                    .HasColumnName("routeStep")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.ScriptId)
+                    .HasColumnName("scriptId")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.StationId)
+                    .HasColumnName("stationId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.StatusId).HasColumnName("statusId");
+
+                entity.Property(e => e.TypeId)
+                    .HasColumnName("typeId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.UpdatedBy)
+                    .HasColumnName("updatedBy")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.UpdatedEmail)
+                    .HasColumnName("updatedEmail")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.UpdatedName)
+                    .HasColumnName("updatedName")
+                    .HasMaxLength(100);
+            });
+            modelBuilder.Entity<MasterStation>(entity =>
+            {
+                entity.HasKey(e => e.StationId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("master_station");
+
+                entity.HasIndex(e => e.StationId)
+                    .HasName("stationId_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.StationId)
+                    .HasColumnName("stationId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasColumnName("createdBy")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.CreatedEmail)
+                    .HasColumnName("createdEmail")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.CreatedName)
+                    .HasColumnName("createdName")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("isActive")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.Station)
+                    .HasColumnName("station")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.StepId)
+                    .HasColumnName("stepId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.UpdatedEmail)
+                    .HasColumnName("updatedEmail")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.UpdatedName)
+                    .HasColumnName("updatedName")
+                    .HasMaxLength(45);
+            });
+            modelBuilder.Entity<MasterStatus>(entity =>
+            {
+                entity.HasKey(e => e.StatusId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("master_status");
+
+                entity.Property(e => e.StatusId)
+                    .HasColumnName("statusId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("isActive")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.StatusColour)
+                    .HasColumnName("statusColour")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.StatusName)
+                    .HasColumnName("statusName")
+                    .HasMaxLength(45);
+            });
+            modelBuilder.Entity<Assembly>(entity =>
+            {
+                entity.ToTable("assembly");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.AssemblyNumber)
+                    .HasColumnName("assemblyNumber")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.AssemblyRevision)
+                    .HasColumnName("assemblyRevision")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.RegId)
+                    .HasColumnName("regId")
+                    .HasColumnType("int(11)");
             });
             OnModelCreatingPartial(modelBuilder);
         }

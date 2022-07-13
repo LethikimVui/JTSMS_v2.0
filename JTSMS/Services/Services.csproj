@@ -47,9 +47,11 @@
     <Compile Include="Interfaces\IAccountService.cs" />
     <Compile Include="Interfaces\IAdminService.cs" />
     <Compile Include="Interfaces\IConfigService.cs" />
+    <Compile Include="Interfaces\IRegistrationService.cs" />
     <Compile Include="Interfaces\IRequestService.cs" />
     <Compile Include="Interfaces\ICommonService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\RegistrationService.cs" />
     <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\AccountService.cs" />

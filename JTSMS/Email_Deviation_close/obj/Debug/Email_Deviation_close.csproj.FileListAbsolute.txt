@@ -1,0 +1,7 @@
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\Email_Deviation_close\bin\Debug\Email_Deviation_close.exe.config
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\Email_Deviation_close\bin\Debug\Email_Deviation_close.exe
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\Email_Deviation_close\bin\Debug\Email_Deviation_close.pdb
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\Email_Deviation_close\obj\Debug\Email_Deviation_close.csproj.AssemblyReference.cache
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\Email_Deviation_close\obj\Debug\Email_Deviation_close.csproj.CoreCompileInputs.cache
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\Email_Deviation_close\obj\Debug\Email_Deviation_close.exe
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\Email_Deviation_close\obj\Debug\Email_Deviation_close.pdb
