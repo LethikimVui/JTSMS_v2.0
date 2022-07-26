@@ -4,6 +4,8 @@
 
 @{
     ViewData["Title"] = "Submission";
+    var Approval_get = ViewData["Approval_get"] as IEnumerable<SharedObjects.ValueObjects.VApproval>;
+
 }
 <div class="container-fluid">
     <div class="row">
@@ -60,7 +62,14 @@
                             </span>
                         </div>
                     </div>
-
+                    <div class="form-group col-md-2 pull-left">
+                        <label class="text-center bold font-green-sharp" for="">Created By</label>
+                        <input class="form-control" value="@Model.CreatedName" readonly />
+                    </div>
+                    <div class="form-group col-md-2 pull-left">
+                        <label class="text-center bold font-green-sharp" for="">Created Date</label>
+                        <input class="form-control" value="@Model.CreationDate" readonly />
+                    </div>
                     @if (Model.StatusId == 1)
                     {
                         <form id="frm-submit">
@@ -118,14 +127,27 @@
                                     <div class="form-group col-md-12 pull-left">
                                         <table id="myTable" class="table table-bordered table-hover table-striped table-responsive" style="margin-left: auto; margin-right: auto;">
                                             <thead>
-                                                <!--<tr class="text-center bold">
-                                                    <th>Assy #</th>-->
-                                                    @*<th>Rev</th>*@
-                                                    <!--<th></th>
-                                                </tr>-->
+                                                <tr class="text-center bold">
+                                                    <th>Assy #</th>
+                                                    <th></th>
+                                                </tr>
                                             </thead>
                                             <tbody id="tbody" name="assy">
-                                           
+                                                @{var assy = Model.AssemblyNumber;
+                                                    if (!String.IsNullOrEmpty(assy))
+                                                    {
+                                                        var list = assy.Split('|');
+                                                        for (int i = 0; i < list.Length; i++)
+                                                        {
+                                                            <tr>
+                                                                <td class="assy">@list[i]                                                        </td>
+                                                                <td><button class="destroy">Delete</button> </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                }
+
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -133,14 +155,14 @@
                                 <div class="form-group col-md-4 pull-left">
                                     <label class="text-center bold font-green-sharp" for="">Change Detail</label>
                                     <div class="form-group">
-                                        <textarea id="txt-changeDetail" class="cell" rows="6" cols="70" style="min-width: 502px; min-height: 80px; max-width: 502px; max-height: 126px; width: 988px; height: 355px;" value="@Model.ChangeDetail"></textarea>
+                                        <textarea id="txt-changeDetail" class="cell" rows="6" cols="70" style="min-width: 502px; min-height: 80px; max-width: 502px; max-height: 126px; width: 988px; height: 355px;">@Model.ChangeDetail</textarea>
                                     </div>
                                 </div>
                             </div>
                         </form>
                         <div class="form-group col-md-12">
-                            <a class="btn btn-success" id="btn-submit" data-detailid="@Model.DetailId" data-regid="@Model.RegId" data-typeid="@Model.TypeId">Submit</a>
-                            <a class="btn btn-success" id="btn-test" data-detailid="@Model.DetailId" data-regid="@Model.RegId" data-typeid="@Model.TypeId">Submit</a>
+                            <a class="btn btn-success" id="btn-submit" data-regid="@Model.RegId" data-typeid="@Model.TypeId">Submit</a>
+                            <a class="btn btn-success" id="btn-test" data-regid="@Model.RegId" data-typeid="@Model.TypeId">Test</a>
                         </div>
                     }
                     else
@@ -164,12 +186,23 @@
                             </div>
                             <div class="form-group col-md-4 pull-left" style="height:62px">
                                 <label class="text-center bold font-green-sharp" for="">Original Script</label>
-                                <a class="wrapper" href=""><span class="glyphicon glyphicon-download-alt"></span></a>
+                                @*<a class="wrapper" href=""><span class="glyphicon glyphicon-download-alt"></span></a>*@
+                                @{
+                                    if (!String.IsNullOrEmpty(Model.AssemblyNumber))
+                                    {
+                                        <a class="wrapper" href="@Url.Action("Download", "Registration", new { fileName = @Model.OriginalFileName, type = "Original", custName = Model.CustName, station = Model.Station, assembly = Model.AssemblyNumber.Split('|').FirstOrDefault() })"><span class="glyphicon glyphicon-download-alt"></span></a>
+                                    }
+                                }
                                 <input class="form-control" value="@Model.OriginalFileName" readonly />
                             </div>
                             <div class="form-group col-md-4 pull-left" style="height:62px">
                                 <label class="text-center bold font-green-sharp" for="">Encrypted Script</label>
-                                <a class="wrapper" href="@Url.Action("DownloadFile", "Request", new { fileName = @Model.EncriptedFileName, type = "encrypted" , custName = Model.CustName, station = Model.Station})"><span class="glyphicon glyphicon-download-alt"></span></a>
+                                @{
+                                    if (!String.IsNullOrEmpty(Model.AssemblyNumber))
+                                    {
+                                        <a class="wrapper" href="@Url.Action("Download", "Registration", new { fileName = @Model.EncriptedFileName, type = "encrypted", custName = Model.CustName, station = Model.Station, assembly = Model.AssemblyNumber.Split('|').FirstOrDefault() })"><span class="glyphicon glyphicon-download-alt"></span></a>
+                                    }
+                                }
                                 <input class="form-control" value="@Model.EncriptedFileName" readonly />
                             </div>
                             <div class="form-group col-md-4 pull-left">
@@ -177,38 +210,132 @@
                                 <input class="form-control" value="@Model.FileHash" readonly />
                             </div>
 
-                            <div class="form-group col-md-4 pull-left">
+                            <div class="form-group col-md-4 pull-right">
                                 <label class="text-center bold font-green-sharp" for="">Evidence</label>
-                              
-                                <div id="listFile">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4 pull-left">
-                                <div class=" input-group col-md-12">
-                                    <label class="text-center bold font-green-sharp" for="">Assembly Detail</label>
-
-                                    <table id="myTable" class="table table-bordered table-hover table-striped table-responsive" style="margin-left: auto; margin-right: auto;">
+                                <div>
+                                    <table class="table table-bordered table-hover table-striped table-responsive" style="margin-left: auto; margin-right: auto;">
                                         <thead>
-                                           
                                         </thead>
-                                        <tbody id="tbody">
+                                        <tbody>
+                                            @{ if (!string.IsNullOrEmpty(Model.Evidence))
+                                                {
+                                                    foreach (var item in Model.Evidence.Split('|'))
+                                                    {
+                                                        <tr>
+                                                            <td>@item</td>
+                                                            <td>
+                                                                <a class="wrapper" href="@Url.Action("Download", "Registration", new { fileName = item, type = "Evidence", custName = Model.CustName, station = Model.Station, assembly = Model.AssemblyNumber.Split('|').FirstOrDefault()})"><span class="glyphicon glyphicon-download-alt"></span></a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
+                            <div class="form-group col-md-4 pull-left">
+                                <label class="text-center bold font-green-sharp" for="">Assembly Detail</label>
+                                <table class="table table-bordered table-hover table-striped table-responsive" style="margin-left: auto; margin-right: auto;">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                        @{ if (!string.IsNullOrEmpty(Model.AssemblyNumber))
+                                            {
+                                                foreach (var item in Model.AssemblyNumber.Split('|'))
+                                                {
+                                                    <tr><td>@item</td></tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="form-group col-md-4 pull-left">
                                 <label class="text-center bold font-green-sharp" for="">Change Detail</label>
                                 <div class="form-group">
-                                    <textarea id="txt-changeDetail" class="cell" rows="6" cols="70" style="min-width: 500px; min-height: 80px; max-width: 500px; max-height: 100px; width: 500px; height: 90px;" value="@Model.ChangeDetail" disabled></textarea>
+                                    <textarea class="cell" rows="6" cols="70" style="min-width: 500px; min-height: 80px; max-width: 500px; max-height: 100px; width: 500px; height: 90px;" disabled>@Model.ChangeDetail</textarea>
                                 </div>
                             </div>
                         </div>
+
+                    }
+                    @if (Approval_get.ToList().Count > 0)
+                    {
                         <div class="form-group col-md-12">
                             <label class="text-center bold font-green-sharp" for="">Approval History</label>
+                            <table class="table table-bordered table-hover table-striped table-responsive">
+                                <thead>
+                                    <tr class="text-center bold">
+                                        <th class="text-center">RouteName</th>
+                                        <th class="text-center">Name</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">UpdateDate</th>
+                                        <th class="text-center">Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Approval_get.ToList())
+                                    {
+                                        <tr>
+                                            @{ var routeName = @item.RouteName != null ? @item.RouteName : "Submission";
+                                                <td class="text-center">@routeName</td>
+                                            }
+                                            @{
+                                                string name = item.IsClosed == 1 ? item.UpdatedName : item.Name;
+                                                <td class="text-center">@name</td>
+                                                string status = item.IsClosed == 1 ? "Closed" : "Pending Approval";
+                                                <td class="text-center">@status</td>
+                                                var date = item.IsClosed == 1 ? item.UpdateDate.ToString() : "";
+                                                <td class="text-center">@date</td>
+                                            }
+                                            <td class="text-center">@item.Remarks</td>
+
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                            </table>
                         </div>
                     }
+                    @{
 
+
+                        if (Model.StatusId == 2)
+                        {
+                            if (Approval_get.Where(s => s.IsClosed == 0).Any())
+                            {
+
+                                var approval_current = Approval_get.Where(s => s.IsClosed == 0).OrderBy(s => s.Sequence).FirstOrDefault();
+                                if (approval_current.NTLogin != null)
+                                {
+                                    if (approval_current.NTLogin.Split(',').Contains(User.GetSpecificClaim("Ntlogin")))
+                                    {
+                                        <div class="form-group col-md-12 pull-left">
+                                            <label class="text-center bold font-green-sharp" for="">Remark</label>
+                                            <input class="form-control" id="txt-remark" />
+                                        </div>
+                                        <div class="form-group col-md-1">
+                                            <a class="btn btn-success" id="btn-approve" data-regid="@Model.RegId" data-routeid="@approval_current.RouteId">Approve</a>
+                                        </div>
+                                        <div class="form-group col-md-1">
+                                            <a class="btn btn-success" id="btn-reject" data-regid="@Model.RegId" data-routeid="@approval_current.RouteId">Reject</a>
+                                        </div>
+                                    }
+                                }
+                            }
+                        }
+
+
+                        if (Model.StatusId == 5 && Model.TypeId == 2)
+                        {
+                            <div class="form-group col-md-1">
+                                <a class="btn btn-success" id="btn-close" data-reqid="@Model.RegId">Close</a>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>

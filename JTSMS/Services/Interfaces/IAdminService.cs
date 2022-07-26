@@ -24,5 +24,15 @@ namespace Services.Interfaces
         Task<ResponseResult> Master_Approval_insert(UserRoleViewModel model);
         Task<ResponseResult> Master_Approval_delete(UserRoleViewModel model);
 
+
+
+        Task<ResponseResult> Master_Route_add(RouteViewModel model);
+
+
+        Task<List<VWorkFlow>> WorkFlow_Route_get(int id);
+        Task<ResponseResult> WorkFlow_Route_add(RouteViewModel model);
+        Task<ResponseResult> WorkFlow_Route_update(RouteViewModel model);
+
+
     }
 }

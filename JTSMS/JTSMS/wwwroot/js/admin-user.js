@@ -14,14 +14,20 @@
 
     function Search() {
         $('#tbl-content').html('');
-        var model = new Object();
+        var custId = parseInt($("#txt-customer-search").val());
+        if (custId) {
 
-        model.CustId = parseInt($("#txt-customer-search").val());
-        model.RoleId = parseInt($("#txt-role-search").val());       
-        model.Ntlogin = $('#txt-ntlogin-search').val() ? $('#txt-ntlogin-search').val() : null;
-        debugger
-        Load(model)
-        
+
+            var model = new Object();
+
+            model.CustId = custId;
+            model.RoleId = parseInt($("#txt-role-search").val());
+            model.Ntlogin = $('#txt-ntlogin-search').val() ? $('#txt-ntlogin-search').val() : null;
+          
+            Load(model)
+        }
+        else
+            bootbox.alert('Please select Customer');
     }
     function Load(model) {
         $.ajax({
@@ -31,24 +37,24 @@
             data: JSON.stringify(model),
             contentType: 'application/json;charset=uft-8',
             success: function (response) {
-                debugger
+              
                 $('#tbl-content').html(response);
             }
         })
     }
     function SearchName() {
         _ntid = $('#txt-search-input').val();
-        debugger
+        
         $.ajax({
             type: 'post',
             url: '/admin/GetDisplayNameFromSamAccountName',
             data: { samAccountName: _ntid },
             success: function (response) {
-                debugger
+              
                 if (response) {
                     $('#txt-userName').text(response);
                     $('#txt-Ntlogin').val(_ntid);
-                    $('#modal-search').modal('hide');                   
+                    $('#modal-search').modal('hide');
                 }
                 else {
                     bootbox.alert("User is not found");
@@ -67,7 +73,7 @@
         model.CreatedBy = user;
         model.CreatedName = name;
         model.CreatedEmail = email;
-        debugger
+       
         $.ajax({
             type: 'post',
             url: '/admin/Access_UserRole_insert',
@@ -77,7 +83,7 @@
                 var data = response.results
 
                 if (data.statusCode == 200) {
-                    bootbox.alert(data.message, function () {Load(model);})
+                    bootbox.alert(data.message, function () { Load(model); })
                 }
                 else if (data.statusCode == 400) {
                     bootbox.alert(data.message)
@@ -93,15 +99,14 @@
         $(".error").html('');
         $(".error").removeClass("error");
         var Id = parseInt($(this).data('id'));
-        debugger
+      
         $.ajax({
             type: 'post',
             url: '/admin/Access_UserRole_Get_By_Id',
             dataType: 'json',
             data: { Id: Id },
             success: function (response) {
-                var data = response.results[0]
-                debugger
+                var data = response.results[0]              
 
                 $('#txt-ntlogin').text(data.ntlogin);
                 $('#txt-name').text(data.ntlogin);
@@ -121,7 +126,7 @@
         model.UpdatedBy = user;
         model.UpdatedName = name;
         model.UpdatedEmail = email;
-        debugger
+      
         $.ajax({
             type: 'post',
             url: '/admin/Access_UserRole_update',
@@ -130,9 +135,9 @@
             contentType: 'application/json,; charset=utf-8',
             success: function (response) {
                 var data = response.results;
-                debugger
+               
                 if (data.statusCode == 200) {
-                    bootbox.alert("Save Successfully!", function () { { Load(model); }})
+                    bootbox.alert("Save Successfully!", function () { { Load(model); } })
                 }
                 else
                     bootbox.alert("Save Failed!")
@@ -142,8 +147,7 @@
     }
 
     function Delete() {
-        userRoleId = $(this).attr('data-id');
-        debugger
+        userRoleId = $(this).attr('data-id');      
         ntlogin = $(this).attr('data-ntlogin');
         var model = new Object();
         model.UserRoleId = parseInt(userRoleId);
@@ -156,12 +160,10 @@
             data: JSON.stringify(model),
             contentType: "application/json; charset=utf-8",
             success: function (response) {
-
                 var data = response.results;
                 if (data.statusCode == 200) {
                     bootbox.alert(`${ntlogin} is deleted`, function () {
-                        model.CustId = parseInt($('#txt-customer-search').val());
-                    debugger
+                        model.CustId = parseInt($('#txt-customer-search').val());                     
                         { Load(model); };
                     })
                 }

@@ -14,6 +14,20 @@ namespace SharedObjects.StoredProcedures
 
 
         public static string Registration_submit = "call usp_Registration_submit (@p0,@p1,@p2,@p3,@p4,@p5,@p6,@p7,@p8,@p9,@p10,@p11)";
+        public static string Registration_approve = "call usp_Registration_approve (@p0,@p1,@p2,@p3,@p4,@p5)";
+        public static string Registration_reject = "call usp_Registration_reject (@p0,@p1,@p2,@p3,@p4,@p5)";
+
+
+
+
+        public static string Assembly_add = "call usp_Assembly_add (@p0,@p1)";
+        public static string Assembly_delete = "call usp_Assembly_delete (@p0)";
+
+        public static string Attachment_add = "call usp_Attachment_add (@p0,@p1)";
+
+
+        public static string Approval_get = "call usp_Approval_get (@p0)";
+
 
 
     }

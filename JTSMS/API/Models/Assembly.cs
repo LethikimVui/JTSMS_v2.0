@@ -11,6 +11,7 @@ namespace API.Models
     {
         public int Id { get; set; }
         public int RegId { get; set; }
+        public int IsActive { get; set; }
         public string AssemblyNumber { get; set; }
         public string AssemblyRevision { get; set; }
     }

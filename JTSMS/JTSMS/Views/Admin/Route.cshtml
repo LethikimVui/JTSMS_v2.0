@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewData["Title"] = "Route";
+    var Type = ViewData["Type"] as IEnumerable<SharedObjects.ValueObjects.VType>;
+}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12" style="min-height: auto !important;height: auto !important;">
+
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet light" style="min-height: auto !important;height: auto !important">
+                <div class="portlet-title">
+
+                    <div class="caption col-md-12">
+                        <span class="caption-subject font-green-sharp bold uppercase">
+                            Administration - Route
+                        </span>
+                    </div>
+                    <div class="form-group col-md-2 pull-left">
+                        <label class="text-center bold font-green-sharp" for="">Request Type</label>
+                        <select class="form-control" id="txt-route-search" data-search="route" name="route" style="color:mediumvioletred">
+                            <option value="">--Please Select--</option>
+                            @foreach (var item in Type.OrderByDescending(c => c.TypeId).ToList())
+                            {
+                                <option value=@item.TypeId>@item.Type</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <a class="btn btn-success" id="btn-search">Search</a>
+                    </div>
+                    <div id="tbl-content" class="table-responsive col-md-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*<table id="table" class="table table-bordered table-hover table-striped" style="margin: auto;width: 50% !important;">
+        <thead>
+            <tr class="text-center bold">
+                <td>Route Name</td>
+                <td>Status</td>
+                <td>Button</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr class="text-center">
+                <td>Submission 3</td>
+                <td> Active</td>
+                <td> <span class="up glyphicon glyphicon-chevron-up"></span> <span class="down glyphicon glyphicon-chevron-down"></span></td>
+            </tr>
+            <tr class="text-center">
+                <td>Submission 2</td>
+                <td> Active</td>
+                <td> <span class="up glyphicon glyphicon-chevron-up"></span> <span class="down glyphicon glyphicon-chevron-down"></span></td>
+            </tr>
+            <tr class="text-center">
+                <td>Submission 1</td>
+                <td> Active</td>
+                <td> <span class="up glyphicon glyphicon-chevron-up"></span> <span class="down glyphicon glyphicon-chevron-down"></span></td>
+            </tr>
+            <tr class="text-center">
+                <td>Submission 4</td>
+                <td> Active</td>
+                <td> <span class="up glyphicon glyphicon-chevron-up"></span> <span class="down glyphicon glyphicon-chevron-down"></span></td>
+            </tr>
+        </tbody>
+
+    </table>*@
+</div>
+@section Scripts{
+    <script src="~/js/admin-route.js"></script>
+    <script src="~/js/test.js"></script>
+    @*<script type="text/javascript">
+        $('body').on('click', '.down', function () {
+
+            debugger
+            var thisRow = $(this).closest('tr');
+            var nextRow = thisRow.next();
+            if (nextRow.length) {
+                nextRow.after(thisRow);
+            }
+        });
+        $('body').on('click', '.up', function () {
+            var thisRow = $(this).closest('tr');
+            var prevRow = thisRow.prev();
+            if (prevRow.length) {
+                prevRow.before(thisRow);
+            }
+        });
+    </script>*@
+}

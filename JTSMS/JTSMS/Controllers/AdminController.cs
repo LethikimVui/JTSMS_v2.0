@@ -76,11 +76,13 @@ namespace JTSMS.Controllers
             }
             return DisplayName;
         }
-       
+
         public async Task<IActionResult> Search()
         {
             var roles = await adminService.Access_Role_get();
-            ViewData["Customers"] = await commonService.Customer_Get();
+            var ntlogin = User.GetSpecificClaim("Ntlogin");
+
+            ViewData["Customers"] = await commonService.Customer_Get(ntlogin);
             ViewData["roles"] = roles;
             return View();
         }
@@ -88,7 +90,9 @@ namespace JTSMS.Controllers
         {
             var userRoles = await adminService.Access_UserRole_get(model);
             var roles = await adminService.Access_Role_get();
-            ViewData["Customers"] = await commonService.Customer_Get();
+            var ntlogin = User.GetSpecificClaim("Ntlogin");
+
+            ViewData["Customers"] = await commonService.Customer_Get(ntlogin);
 
             ViewData["roles"] = roles;
             return PartialView(userRoles);
@@ -115,18 +119,20 @@ namespace JTSMS.Controllers
             var result = await adminService.Access_UserRole_Get_By_Id(id);
             return Json(new { results = result });
         }
-
-
         public async Task<IActionResult> Approval()
         {
             var Routes = await commonService.Master_Route_get();
-            ViewData["Customers"] = await commonService.Customer_Get();
+            var ntlogin = User.GetSpecificClaim("Ntlogin");
+
+            ViewData["Customers"] = await commonService.Customer_Get(ntlogin);
             ViewData["Routes"] = Routes;
             return View(Routes);
         }
         public async Task<IActionResult> Master_Approval_get_by_routeId(int routeId)
         {
-            ViewData["Customers"] = await commonService.Customer_Get();
+            var ntlogin = User.GetSpecificClaim("Ntlogin");
+
+            ViewData["Customers"] = await commonService.Customer_Get(ntlogin);
             var Approval_get_by_routeId = await adminService.Master_Approval_get_by_routeId(routeId);
             return PartialView(Approval_get_by_routeId);
         }
@@ -142,5 +148,34 @@ namespace JTSMS.Controllers
             var result = await adminService.Master_Approval_delete(model);
             return Json(new { results = result });
         }
+        public async Task<IActionResult> Route()
+        {
+            ViewData["Type"] = await commonService.Type_get();
+
+            return View();
+        }
+        public async Task<IActionResult> Route_get(int id)
+        {
+            var route = await commonService.Master_Route_get();
+            ViewData["route"] = route;
+            var results = await adminService.WorkFlow_Route_get(id);
+            return PartialView(results);
+        }
+        public async Task<IActionResult> WorkFlow_Route_update([FromBody] RouteViewModel model)
+        {
+            var result = await adminService.WorkFlow_Route_update(model);
+            return Json(new { results = result });
+        }
+        public async Task<IActionResult> WorkFlow_Route_add([FromBody] RouteViewModel model)
+        {
+            var result = await adminService.WorkFlow_Route_add(model);
+            return Json(new { results = result });
+        }
+        public async Task<IActionResult> Master_Route_add([FromBody] RouteViewModel model)
+        {
+            var result = await adminService.Master_Route_add(model);
+            return Json(new { results = result });
+        }
+
     }
 }

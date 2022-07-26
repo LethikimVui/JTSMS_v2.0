@@ -12,8 +12,7 @@ $(document).ready(function () {
         formData.append('model.mid', 1);
         for (var i = 0; i < files.length; i++) {
             formData.append('model.files', files[i]);
-        }
-        debugger
+        }     
 
         $.ajax({
             url: '/test/TestUpload',
@@ -34,7 +33,7 @@ $(document).ready(function () {
 
     $('#fileInput').change(function () {
         var files = $('#fileInput').get(0).files;
-        debugger
+        
         if (!this.files.length) {
             document.getElementById('list').innerHTML = "no files selected";
         }
@@ -47,11 +46,6 @@ $(document).ready(function () {
                 var p = document.createElement('p');
                 p.innerHTML = files[i].name
 
-                //var btn = document.createElement('button')
-                //btn.innerText = "X";
-                //btn.className = 'destroy'   
-                //dv.appendChild(btn);
-
                 dv.appendChild(p);
                 document.getElementById('list').appendChild(dv)
             }
@@ -59,11 +53,7 @@ $(document).ready(function () {
         }
     })
 
-    $(".destroy").click(function () {
-        //$(this).text('u') ;
-        //fired_button = $(this).text();
-        //alert(fired_button);
-        debugger
+    $(".destroy").click(function () {      
         $(this)[0].parentNode.parentNode.remove();
     });
 })

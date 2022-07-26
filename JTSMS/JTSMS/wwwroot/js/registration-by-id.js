@@ -3,7 +3,9 @@
     //$('body').off('click', '#btn-select').on('click', '#btn-select', Select);
     $('body').off('click', '#btn-add').on('click', '#btn-add', onAddAssy);
     $('body').off('click', '#btn-submit').on('click', '#btn-submit', Submit);
-    
+    $('body').off('click', '#btn-approve').on('click', '#btn-approve', Approve);
+    $('body').off('click', '#btn-reject').on('click', '#btn-reject', Reject);
+
 
 
     user = document.getElementById('userinfo').getAttribute('data-user');
@@ -33,7 +35,7 @@
     function Select() {
         _number = $(this).attr('data-number');
         _rev = $(this).attr('data-rev');
-        debugger
+        
 
         let tbody = document.getElementById('tbody')
         table = tbody.innerHTML;
@@ -65,14 +67,21 @@
     }
 
 
-    GetAssyList = function() {
+    GetAssyList = function () {
         var arr_assy = new Array();
         var arr = $('[class="assy"]')
-        debugger
         for (var i = 0; i < arr.length; i++) {
             arr_assy.push(arr[i].innerHTML)
         }
         return arr_assy;
+    }
+    GetEvidenceList = function (date) {
+        var arr_evidence = new Array();
+        var arr = $('[class="evidence"]')        
+        for (var i = 0; i < arr.length; i++) {
+            arr_evidence.push(ChangeFileName(arr[i].innerHTML, date))
+        }
+        return arr_evidence;
     }
     function onAddAssy() {
         input = $('#txt-assy').val().toUpperCase();
@@ -83,17 +92,17 @@
             }
             else {
                 alert(`${input} already in the list`)
-            }           
+            }
         }
         else bootbox.alert('Assembly Number is required')
-    }   
+    }
     function AddElement(input) {
         $.ajax({
             url: '/Registration/CheckAssy',
             type: 'post',
             data: { assy: input },
             success: function (response) {
-                debugger
+                
                 if (response.results) {
                     let tbody = document.getElementById('tbody')
                     table = tbody.innerHTML;
@@ -103,7 +112,7 @@
                                        </tr>`
                     table += newRow
                     tbody.innerHTML = table;
-                    debugger
+                   
                     $('#txt-assy').val('');
                 }
                 else {
@@ -133,53 +142,67 @@
     })
 
     function Submit() {
+        var assyList = GetAssyList()
+        len = assyList.length;
         if ($('#frm-submit').valid()) {
-            var getDate = new Date();
-            var date = getDate.getFullYear().toString() + (getDate.getMonth() + 1) + getDate.getDate() + getDate.getHours() + getDate.getMinutes() + getDate.getSeconds() + getDate.getMilliseconds();
-            var t = GetAssyList()
-            debugger
+            if (len) {
 
-            var model = new Object();
-            model.RegId = parseInt($(this).attr('data-regid'));
-            model.ScriptName = $("#txt-scriptname").val();
-            model.ScriptRev = $('#txt-scriptrev').val();
-            model.PCNorDevNumber = $('#txt-PCNorDevNumber').val();
-            model.ChangeDetail = $('#txt-changeDetail').val();
-            model.AssemblyNumber = t.join('|');
-            model.Description = $('#txt-description').val();
-            model.CreatedBy = user
-            model.CreatedName = name
-            model.CreatedEmail = email
-            model.OriginalFileName = ChangeFileName($('#txt-original')[0].files[0], date)
-            model.EncryptedFileName = ChangeFileName($('#txt-encrypted')[0].files[0], date)
-            //model.File = $('#txt-encrypted')[0].files[0] ///can add to the JS model but cannot transfer this to controller
-            model.FileHash = $('#txt-encrypted').attr('data-hash').toUpperCase();
-            $.ajax({
-                url: '/Registration/Registration_submit',
-                type: 'post',
-                data: JSON.stringify(model),
-                dataType: 'json',
-                contentType: 'application/json;charset=uft-8',
-                success: function (response) {
-                    results = response.results
-                    debugger
-                    if (results.statusCode == 200) {
-                        var elm_file = $('[type="file"]')
-                        for (var i = 0; i < elm_file.length; i++) {
-                            var type = elm_file[i].name
-                            files = $(`#txt-${type}`)[0].files
-                            Upload(files, type, date)
+                var getDate = new Date();
+                var date = getDate.getFullYear().toString() + (getDate.getMonth() + 1) + getDate.getDate() + getDate.getHours() + getDate.getMinutes() + getDate.getSeconds() + getDate.getMilliseconds();
+                //var assyList = GetAssyList()
+                var evidenceList = GetEvidenceList(date)
+                var custName = $('#txt-custname').val();
+                var station = $('#txt-station').val();
+
+                var model = new Object();
+                model.RegId = parseInt($(this).attr('data-regid'));
+                model.TypeId = parseInt($(this).attr('data-typeid'));
+                model.ScriptName = $("#txt-scriptname").val();
+                model.ScriptRev = $('#txt-scriptrev').val();
+                model.PCNorDevNumber = $('#txt-PCNorDevNumber').val();
+                model.ChangeDetail = $('#txt-changeDetail').val();
+                model.AssemblyNumber = assyList.join('|');
+                model.Description = $('#txt-description').val();
+                model.CreatedBy = user
+                model.CreatedName = name
+                model.CreatedEmail = email
+                model.OriginalFileName = ChangeFileName($('#txt-original')[0].files[0].name, date)
+                model.EncryptedFileName = ChangeFileName($('#txt-encrypted')[0].files[0].name, date)
+                model.Evidence = evidenceList.join('|');
+                //model.File = $('#txt-encrypted')[0].files[0] ///can add to the JS model but cannot transfer this to controller
+                model.FileHash = $('#txt-encrypted').attr('data-hash').toUpperCase();
+                $.ajax({
+                    url: '/Registration/Registration_submit',
+                    type: 'post',
+                    data: JSON.stringify(model),
+                    dataType: 'json',
+                    contentType: 'application/json;charset=uft-8',
+                    cache: true,
+                    success: function (response) {
+                        results = response.results
+                        
+                        if (results.statusCode == 200) {
+                            var elm_file = $('[type="file"]')
+                            for (var i = 0; i < elm_file.length; i++) {
+                                var type = elm_file[i].name
+                                files = $(`#txt-${type}`)[0].files
+                                for (var j = 0; j < assyList.length; j++) {
+                                    Upload(files, type, date, custName, station, assyList[j])
+
+                                }
+                            }
+                            bootbox.alert(results.message, function () { location.reload() })
                         }
-                        bootbox.alert(results.message, function () { location.reload() })
+                        else bootbox.alert(results.message)
                     }
-                    else bootbox.alert(results.message)
-                }
-            })
+                })
+            }
+            else
+                bootbox.alert('Please input Assembly Number');
         }
-
     }
 
-    function Upload(_files, _type, _date) {
+    function Upload(_files, _type, _date, _custName, _station, _assembly) {
         //var files = $('#txt-encrypted').get(0).files;
         var formData = new FormData();
         for (var i = 0; i < _files.length; i++) {
@@ -187,8 +210,10 @@
         }
         formData.append('model.type', _type);
         formData.append('model.date', _date);
-        debugger
-
+        formData.append('model.CustName', _custName);
+        formData.append('model.Station', _station);
+        formData.append('model.Assembly', _assembly);
+        
         $.ajax({
             url: '/Registration/Upload',
             type: 'POST',
@@ -207,17 +232,89 @@
     function ChangeFileName(_file, _date) {
         var name = "";
 
-        var splitname = _file.name.split('.')
+        var splitname = _file.split('.')
         var len = splitname.length
         var extension = splitname[len - 1]
         name = splitname.slice(0, len - 1).join('.');
         name += '_' + _date + '.' + extension;
-
-        debugger
+       
         return name;
     }
-   
 
+    function Approve() {
+        var model = new Object();
 
+        var model = new Object();
+        model.RegId = parseInt($(this).attr('data-regid'));
+        model.ScriptId = $('#txt-scriptid').val();
+        model.RouteId = parseInt($(this).attr('data-routeid'));
+        model.Remark = $('#txt-remark').val();
+        model.Action = "Approve";
+        model.CreatedBy = user
+        model.CreatedName = name
+        model.CreatedEmail = email
+
+        $.ajax({
+            type: 'post',
+            url: '/Registration/Registration_approve',
+            data: JSON.stringify(model),
+            cache: false,
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            success: function (response) {
+                var statusCode = response.results.statusCode;
+                var message = response.results.message;
+
+                if (statusCode == 200) {
+                    bootbox.alert(message, function () { location.reload() });
+                }
+                else {
+                    bootbox.alert(message);
+                }
+            },
+            error: function (e) {
+                bootbox.alert(e.responseText);
+            }
+        })
+
+    }
+
+    function Reject() {
+        var model = new Object();
+
+        var model = new Object();
+        model.RegId = parseInt($(this).attr('data-regid'));
+        model.ScriptId = $('#txt-scriptid').val();
+        model.RouteId = parseInt($(this).attr('data-routeid'));
+        model.Remark = $('#txt-remark').val();
+        model.Action = "Approve";
+        model.CreatedBy = user
+        model.CreatedName = name
+        model.CreatedEmail = email
+
+        $.ajax({
+            type: 'post',
+            url: '/Registration/Registration_reject',
+            data: JSON.stringify(model),
+            cache: false,
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            success: function (response) {
+                var statusCode = response.results.statusCode;
+                var message = response.results.message;
+
+                if (statusCode == 200) {
+                    bootbox.alert(message, function () { location.reload() });
+                }
+                else {
+                    bootbox.alert(message);
+                }
+            },
+            error: function (e) {
+                bootbox.alert(e.responseText);
+            }
+        })
+
+    }
 
 })

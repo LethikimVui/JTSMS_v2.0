@@ -5,7 +5,7 @@
     toolTip.addEventListener('click', copy);
     toolTip.addEventListener('mouseleave', out);
     function copy() {
-        debugger
+       
         var copyText = document.getElementById("txt-scriptid");
         copyText.select();
         document.execCommand("copy");
@@ -30,7 +30,7 @@
 
                 var p = document.createElement('p');
                 p.innerHTML = files[i].name
-
+                p.className = "evidence";
                 //var btn = document.createElement('button')
                 //btn.innerText = "X";
                 //btn.className = 'destroy'   
@@ -53,7 +53,7 @@
     function Encripted() {
         var reader = new FileReader(); // define a Reader
         var file = $('#txt-encrypted')[0].files[0]; // get the File obect
-        debugger
+      
         if (!file) {
             alert('no encrypted file selected');
             return

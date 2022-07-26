@@ -66,76 +66,17 @@ namespace API.Controllers
                 else if (isPending)
                 {
                     return BadRequest(new ResponseResult(400, model.TypeId + " request is pending submission"));
-
                 }
-                //else if (isDev)
-                //{
-                //    return BadRequest(new ResponseResult(400, "Dev is applying for this request"));
-                //}
                 else
                 {
                     return BadRequest(new ResponseResult(400, "NEW / ECN/ ECO Request is not ready for a new request"));
                 }
-
-
-                //if (model.TypeId == 3) // PCN / ECN / ECO
-                //{
-                //    if (isReady && !isPending) //!isDev &&
-                //    {
-                //        await context.Database.ExecuteSqlCommandAsync(SPRegistration.Registration_add, model.CustId, model.StationId, model.RouteStep, model.TypeId, model.PlatformId, model.Family, model.Description, model.CreatedBy, model.CreatedName, model.CreatedEmail);
-                //        return Ok(new ResponseResult(200, "PCN / ECN / ECO"));
-                //    }
-                //    else if (isPending)
-                //    {
-                //        return BadRequest(new ResponseResult(400, "PCN/ECN/ECO request is pending submission"));
-
-                //    }
-                //    //else if (isDev)
-                //    //{
-                //    //    return BadRequest(new ResponseResult(400, "Dev is applying for this request"));
-                //    //}
-                //    else
-                //    {
-                //        return BadRequest(new ResponseResult(400, "NEW / ECN/ ECO Request is not ready for a new request"));
-                //    }
-                //}
-                //else // DEV
-                //{
-
-                //    if (isReady && !isPending) //!isDev &&
-                //    {
-                //        await context.Database.ExecuteSqlCommandAsync(SPRegistration.Registration_add, model.CustId, model.StationId, model.RouteStep, model.TypeId, model.PlatformId, model.Family, model.Description, model.CreatedBy, model.CreatedName, model.CreatedEmail);
-                //        return Ok(new ResponseResult(200, "DEV"));
-                //    }
-                //    else if (isPending)
-                //    {
-                //        return BadRequest(new ResponseResult(400, "DEV request is pending submission"));
-
-                //    }
-                //    //else if (isDev)
-                //    //{
-                //    //    return BadRequest(new ResponseResult(400, "Dev is applying for this request"));
-                //    //}
-                //    else
-                //    {
-                //        return BadRequest(new ResponseResult(400, "NEW / ECN/ ECO Request is not ready for a new DEV request"));
-                //    }
-                //}
             }
-            //try
-            //{
-            //    await context.Database.ExecuteSqlCommandAsync(SPRegistration.Registration_add, model.CustId, model.StationId, model.RouteStep, model.TypeId, model.PlatformId, model.Family, model.Description, model.CreatedBy, model.CreatedName, model.CreatedEmail);
-            //    return Ok(new ResponseResult(200, "ok"));
-            //}
-            //catch (Exception ex)
-            //{
-            //    return BadRequest(new ResponseResult(400, ex.Message));
-            //}
         }
         [HttpGet("CheckAssy/{assy}")]
         public bool CheckAssy(string assy)
         {
-            var assyList = context.Assembly.Where(s => s.AssemblyNumber == assy);
+            var assyList = context.Assembly.Where(s => s.AssemblyNumber == assy && s.IsActive == 1);
             bool isExisting = assyList.Any();
             if (!isExisting)
             {
@@ -153,8 +94,8 @@ namespace API.Controllers
 
                         };
                 return false;
-            }           
-            
+            }
+
         }
         [HttpPost("Registration_submit")]
         [Obsolete]
@@ -162,13 +103,71 @@ namespace API.Controllers
         {
             try
             {
-                //await context.Database.ExecuteSqlCommandAsync(SPRegistration.Registration_submit, model.RegId, model.ScriptName, model.ScriptRev, model.PcnorDevNumber, model.ChangeDetail, model.FileHash, model.OriginalFileName, model.EncryptedFileName, model.Description, model.CreatedBy, model.CreatedName, model.CreatedEmail);
-                return Ok(new ResponseResult(200, "Submit successfully"));
+                var WorkflowRoute = context.NewWorkflowRoute.Where(s => s.TypeId == model.TypeId && s.IsActive ==1).ToList();
+                if (WorkflowRoute.Any())
+                {
+                    await context.Database.ExecuteSqlCommandAsync(SPRegistration.Registration_submit, model.RegId, model.ScriptName, model.ScriptRev, model.PcnorDevNumber, model.ChangeDetail, model.FileHash, model.OriginalFileName, model.EncryptedFileName, model.Description, model.CreatedBy, model.CreatedName, model.CreatedEmail);
+                    var arr_AssemblyNumber = model.AssemblyNumber.Split('|');
+                    foreach (var AssemblyNumber in arr_AssemblyNumber)
+                    {
+                        await context.Database.ExecuteSqlCommandAsync(SPRegistration.Assembly_add, model.RegId, AssemblyNumber);
+                    }
+                    var arr_Attachment = model.Evidence.Split('|');
+
+                    foreach (var item in arr_Attachment)
+                    {
+                        await context.Database.ExecuteSqlCommandAsync(SPRegistration.Attachment_add, model.RegId, item);
+                    }
+                    return Ok(new ResponseResult(200, "Submit successfully"));
+
+                }
+                else
+                    return BadRequest(new ResponseResult(400, "Missing work flow route. Please contact administrator!"));
+            }
+            catch (Exception ex)
+            {
+                await context.Database.ExecuteSqlCommandAsync(SPRegistration.Assembly_delete, model.RegId);
+                return BadRequest(new ResponseResult(400, ex.Message));
+            }
+
+        }
+        [HttpPost("Registration_approve")]
+        [Obsolete]
+        public async Task<IActionResult> Registration_approve(RegistrationViewModel model)
+        {
+            try
+            {
+                await context.Database.ExecuteSqlCommandAsync(SPRegistration.Registration_approve, model.RegId, model.RouteId, model.Remark, model.CreatedBy, model.CreatedName, model.CreatedEmail);
+                return Ok(new ResponseResult(200, "The ticket is approved"));
             }
             catch (Exception ex)
             {
                 return BadRequest(new ResponseResult(400, ex.Message));
             }
+
+        }  
+        [HttpPost("Registration_reject")]
+        [Obsolete]
+        public async Task<IActionResult> Registration_reject(RegistrationViewModel model)
+        {
+            try
+            {
+                await context.Database.ExecuteSqlCommandAsync(SPRegistration.Registration_reject, model.RegId, model.RouteId, model.Remark, model.CreatedBy, model.CreatedName, model.CreatedEmail);
+                return Ok(new ResponseResult(200, "The ticket is rejected"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseResult(400, ex.Message));
+            }
+
+        }
+
+        [HttpGet("Approval_get/{id}")]
+        [Obsolete]
+        public async Task<List<VApproval>> Approval_get(int id)
+        {
+            var results = await context.Query<VApproval>().AsNoTracking().FromSql(SPRegistration.Approval_get, id).ToListAsync();
+            return results;
         }
     }
 }

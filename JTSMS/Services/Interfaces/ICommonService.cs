@@ -9,11 +9,13 @@ namespace Services.Interfaces
 {
     public interface ICommonService
     {
-        Task<List<VCustomer>> Customer_Get();
+        Task<List<VCustomer>> Customer_Get(string ntlogin);
         Task<List<VStation>> Station_get();
         Task<List<VType>> Type_get();
         Task<List<VRoute>> Master_Route_get();
         Task<List<VRouteStep>> Master_RouteStep_get();
+        Task<List<VPlatform>> Master_Platform_get();
+
         Task<List<VUserRole>> Access_UserRole_Get_By_ScriptId(string scriptId);
 
     }

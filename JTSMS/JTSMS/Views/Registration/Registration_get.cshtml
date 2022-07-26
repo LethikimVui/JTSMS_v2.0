@@ -4,6 +4,8 @@
     var customers = ViewData["Customer"] as IEnumerable<SharedObjects.ValueObjects.VCustomer>;
     var Station = ViewData["Station"] as IEnumerable<SharedObjects.ValueObjects.VStation>;
     var Type = ViewData["Type"] as IEnumerable<SharedObjects.ValueObjects.VType>;
+    var Platform = ViewData["Platform"] as IEnumerable<SharedObjects.ValueObjects.VPlatform>;
+
     //var RouteStep = ViewData["RouteStep"] as IEnumerable<SharedObjects.ValueObjects.VRouteStep>;
     //var RouteStep = ViewData["RouteStep"] as IEnumerable<JTSMS.Models.Recordset>;
 }
@@ -41,7 +43,7 @@
                         <option value="">Please Select</option>
                         @foreach (var item in Station.OrderByDescending(c => c.Station).ToList())
                         {
-                            <option value=@item.StepId>@item.Station</option>
+                            <option value=@item.StationId>@item.Station</option>
                         }
                     </select>
                 </td>
@@ -66,8 +68,10 @@
                 <td>
                     <select class="form-control" id="txt-platform" data-search="platform" name="platform" style="color:mediumvioletred">
                         <option value="">--Please Select--</option>
-                        <option value=1>JEMSts </option>
-                        <option value=2>Jabil Test</option>
+                        @foreach (var item in Platform.OrderByDescending(c => c.PlatformId).ToList())
+                        {
+                            <option value=@item.PlatformId>@item.Platform</option>
+                        }
                     </select>
                 </td>
                 <td></td>

@@ -95,7 +95,7 @@ namespace JTSMS.Controllers
                     return Redirect(returnUrl);
                 }
                 else
-                    return RedirectToAction("search", "request");
+                    return RedirectToAction("search", "registration");
             }
             else
             {

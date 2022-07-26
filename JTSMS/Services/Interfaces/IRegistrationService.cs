@@ -14,9 +14,14 @@ namespace Services.Interfaces
 
         Task<List<VRegistration>> Registration_get(RegistrationViewModel model);
         Task<ResponseResult> Registration_submit(RegistrationViewModel model);
+        Task<ResponseResult> Registration_approve(RegistrationViewModel model);
+        Task<ResponseResult> Registration_reject(RegistrationViewModel model);
         Task<VRequest> Registration_get_by_id(int id);
         Task<ResponseResult> Registration_add(RegistrationViewModel model);
         Task<bool> CheckAssy(string assy);
+
+
+        Task<List<VApproval>> Approval_get(int id);
 
     }
 }

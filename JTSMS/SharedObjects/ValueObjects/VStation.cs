@@ -9,7 +9,7 @@ namespace SharedObjects.ValueObjects
     public class VStation
     {
         public int StationId { get; set; }
-        public int StepId { get; set; }
+        //public int StepId { get; set; }
         public string Station { get; set; }
     }
 }

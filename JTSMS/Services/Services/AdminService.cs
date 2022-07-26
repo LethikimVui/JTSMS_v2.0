@@ -113,5 +113,53 @@ namespace Services.Services
             }
             return responseResult;
         }
+
+        public async Task<List<VWorkFlow>> WorkFlow_Route_get(int id)
+        {
+            List<VWorkFlow> results = new List<VWorkFlow>();
+            using (var response = await httpClient.GetAsync("api/Admin/WorkFlow_Route_get/" + id))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                results = JsonConvert.DeserializeObject<List<VWorkFlow>>(apiResponse);
+            }
+            return results;
+        }
+
+        public async Task<ResponseResult> WorkFlow_Route_update(RouteViewModel model)
+        {
+
+            ResponseResult responseResult = new ResponseResult();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            using (var response = await httpClient.PostAsync("api/admin/WorkFlow_Route_update", content))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                responseResult = JsonConvert.DeserializeObject<ResponseResult>(apiResponse);
+            }
+            return responseResult;
+        }
+
+        public async Task<ResponseResult> WorkFlow_Route_add(RouteViewModel model)
+        {
+            ResponseResult responseResult = new ResponseResult();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            using (var response = await httpClient.PostAsync("api/admin/WorkFlow_Route_add", content))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                responseResult = JsonConvert.DeserializeObject<ResponseResult>(apiResponse);
+            }
+            return responseResult;
+        }
+
+        public async Task<ResponseResult> Master_Route_add(RouteViewModel model)
+        {
+            ResponseResult responseResult = new ResponseResult();
+            StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            using (var response = await httpClient.PostAsync("api/admin/Master_Route_add", content))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                responseResult = JsonConvert.DeserializeObject<ResponseResult>(apiResponse);
+            }
+            return responseResult;
+        }
     }
 }

@@ -9,7 +9,8 @@ namespace SharedObjects.ValueObjects
     public class VRequest :VRegistration
     {
         public int? DetailId { get; set; }
-        //public string AssemblyNumber { get; set; }
+        public string Evidence { get; set; }
+        public string AssemblyNumber { get; set; }
         public string PcnorDevNumber { get; set; }
         public string FileHash { get; set; }
         public string OriginalFileName { get; set; }

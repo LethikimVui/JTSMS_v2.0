@@ -19,17 +19,17 @@ namespace API.Controllers
         {
             this.context = context;
         }
-        [HttpGet()]
-        public List<Requestdetail> Index()
-        {
-            var Requestdetail = context.Requestdetail.AsNoTracking().ToList();
-            var singleRequest = context.Requestdetail.Single(c => c.ReqId == 54);
-            var selectWithContain = context.Requestdetail.AsEnumerable()
-                .Where(c => Combine(c.AssemblyNumber, c.AssemblyRevision).Contains("P1095284-01 P"))
-                .ToList();
-            var t = context.Requestdetail.Include(s => s.IsActive).ToList();
-            return Requestdetail;
-        }
+        //[HttpGet()]
+        //public List<Requestdetail> Index()
+        //{
+        //    var Requestdetail = context.Requestdetail.AsNoTracking().ToList();
+        //    var singleRequest = context.Requestdetail.Single(c => c.ReqId == 54);
+        //    var selectWithContain = context.Requestdetail.AsEnumerable()
+        //        .Where(c => Combine(c.AssemblyNumber, c.AssemblyRevision).Contains("P1095284-01 P"))
+        //        .ToList();
+        //    var t = context.Requestdetail.Include(s => s.IsActive).ToList();
+        //    return Requestdetail;
+        //}
         static string Combine(string firstName, string lastName)
         {
             return (firstName + " " + lastName);

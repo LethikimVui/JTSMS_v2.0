@@ -31,11 +31,11 @@ namespace API.Controllers
             var results = await context.Query<VScriptId>().AsNoTracking().FromSql(SPCommon.JTSMS_ConnectionString).ToListAsync();
             return results[0].ScriptId;
         }
-        [HttpGet("Customer_get")]
+        [HttpGet("Customer_get/{ntlogin}")]
         [Obsolete]
-        public async Task<List<VCustomer>> Customer_get()
+        public async Task<List<VCustomer>> Customer_get(string ntlogin)
         {
-            var results = await context.Query<VCustomer>().AsNoTracking().FromSql(SPCommon.Customer_get).ToListAsync();
+            var results = await context.Query<VCustomer>().AsNoTracking().FromSql(SPCommon.Customer_get, ntlogin).ToListAsync();
             return results;
         }
         [HttpGet("Master_Route_get")]
@@ -64,6 +64,13 @@ namespace API.Controllers
         public async Task<List<VRouteStep>> Master_RouteStep_get()
         {
             var results = await context.Query<VRouteStep>().AsNoTracking().FromSql(SPCommon.Master_RouteStep_get).ToListAsync();
+            return results;
+        }
+        [HttpGet("Master_Platform_get")]
+        [Obsolete]
+        public async Task<List<VPlatform>> Master_Platform_get()
+        {
+            var results = await context.Query<VPlatform>().AsNoTracking().FromSql(SPCommon.Master_Platform_get).ToListAsync();
             return results;
         }
         [HttpGet("Access_UserRole_Get_By_ScriptId/{scriptId}")]

@@ -32,10 +32,10 @@ namespace Services.Services
             return results;
         }
 
-        public async Task<List<VCustomer>> Customer_Get()
+        public async Task<List<VCustomer>> Customer_Get(string ntlogin)
         {
             List<VCustomer> customers = new List<VCustomer>();
-            using (var response = await httpClient.GetAsync("api/common/Customer_Get"))
+            using (var response = await httpClient.GetAsync("api/common/Customer_Get/" + ntlogin))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 customers = JsonConvert.DeserializeObject<List<VCustomer>>(apiResponse);
@@ -72,6 +72,17 @@ namespace Services.Services
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 results = JsonConvert.DeserializeObject<List<VType>>(apiResponse);
+            }
+            return results;
+        }
+
+        public async Task<List<VPlatform>> Master_Platform_get()
+        {
+            List<VPlatform> results = new List<VPlatform>();
+            using (var response = await httpClient.GetAsync("api/common/Master_Platform_get"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                results = JsonConvert.DeserializeObject<List<VPlatform>>(apiResponse);
             }
             return results;
         }

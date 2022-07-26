@@ -532,11 +532,6 @@ C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\net
 C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Config\Search_Equipment.cshtml.g.cs
 C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
-C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Request\Get.cshtml.g.cs
-C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Request\RequestDetail_get.cshtml.g.cs
-C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Request\RequestDetail_get_by_id.cshtml.g.cs
-C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Request\Search.cshtml.g.cs
-C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Request\Search_Number.cshtml.g.cs
 C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -554,3 +549,5 @@ C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\net
 C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Registration\Search.cshtml.g.cs
 C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Registration\Registration_get.cshtml.g.cs
 C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Registration\Registration_get_by_id.cshtml.g.cs
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Route.cshtml.g.cs
+C:\Users\1099969\Desktop\Development\GitHub\JTSMS_v2.0\JTSMS\JTSMS\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Route_get.cshtml.g.cs

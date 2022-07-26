@@ -24,13 +24,13 @@ namespace API.Models
 
         public virtual DbSet<ScriptDetails> ScriptDetails { get; set; }
         public virtual DbSet<MasterApproval> MasterApproval { get; set; }
-        public virtual DbSet<Requestdetail> Requestdetail { get; set; }
         public virtual DbSet<AccessUserRole> AccessUserRole { get; set; }
         public virtual DbSet<Watchdogconfig> Watchdogconfig { get; set; }
         public virtual DbSet<Registration> Registration { get; set; }
         public virtual DbSet<MasterStation> MasterStation { get; set; }
         public virtual DbSet<MasterStatus> MasterStatus { get; set; }
         public virtual DbSet<Assembly> Assembly { get; set; }
+        public virtual DbSet<NewWorkflowRoute> NewWorkflowRoute { get; set; }
 
 
         public virtual DbQuery<VCustomer> VCustomer { get; set; }
@@ -39,6 +39,7 @@ namespace API.Models
         public virtual DbQuery<VDetail> VDetail { get; set; }
         public virtual DbQuery<VType> VType { get; set; }
         public virtual DbQuery<VApproval> VApproval { get; set; }
+        public virtual DbQuery<VApproval> VApproval_new { get; set; }
         public virtual DbQuery<VUserRole> VUserRole { get; set; }
         public virtual DbQuery<VRole> VRole { get; set; }
         public virtual DbQuery<VRoute> VRoute { get; set; }
@@ -47,6 +48,8 @@ namespace API.Models
         public virtual DbQuery<VRouteStep> VRouteStep { get; set; }
         public virtual DbQuery<VRegistration> VRegistration { get; set; }
         public virtual DbQuery<VRequest> VRequest { get; set; }
+        public virtual DbQuery<VPlatform> VPlatform { get; set; }
+        public virtual DbQuery<VWorkFlow> VWorkFlow { get; set; }
 
         [Obsolete]
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -54,7 +57,7 @@ namespace API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("Data Source=vnhcmm0teapp03;Initial Catalog=jtestsms;User Id=hcm_vui_usr;Password=hcm_vui_usr;")
+                optionsBuilder.UseMySQL("Data Source=vnhcmm0teapp03;Initial Catalog=jtsms;User Id=hcm_vui_usr;Password=hcm_vui_usr;")
                     .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning)); ;
             }
         }
@@ -170,139 +173,6 @@ namespace API.Models
                 entity.Property(e => e.RouteId)
                     .HasColumnName("routeId")
                     .HasColumnType("int(11)");
-            });
-            modelBuilder.Entity<Requestdetail>(entity =>
-            {
-                entity.HasKey(e => e.ReqId)
-                    .HasName("PRIMARY");
-
-                entity.ToTable("requestdetail");
-
-                entity.HasIndex(e => e.Filehash)
-                    .HasName("file_hash_UNIQUE")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.ReqId)
-                    .HasName("reqId_UNIQUE")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.ReqNumber)
-                    .HasName("reqNumber_UNIQUE")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.Scriptid)
-                    .HasName("script_id_UNIQUE")
-                    .IsUnique();
-
-                entity.Property(e => e.ReqId)
-                    .HasColumnName("reqId")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.AssemblyNumber)
-                    .HasColumnName("assemblyNumber")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.AssemblyRevision)
-                    .HasColumnName("assemblyRevision")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.ChangeDetail)
-                    .HasColumnName("changeDetail")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.CreatedBy)
-                    .HasColumnName("createdBy")
-                    .HasMaxLength(10);
-
-                entity.Property(e => e.CreatedEmail)
-                    .HasColumnName("createdEmail")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.CreatedName)
-                    .HasColumnName("createdName")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.CustId)
-                    .HasColumnName("custId")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.EncriptedFileName)
-                    .HasColumnName("encriptedFileName")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.Filehash)
-                    .HasColumnName("filehash")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.Firmware)
-                    .HasColumnName("firmware")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.FirmwareRevision)
-                    .HasColumnName("firmwareRevision")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.IsActive).HasColumnName("isActive");
-
-                entity.Property(e => e.PcnorDevNumber)
-                    .HasColumnName("PCNorDevNumber")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.PlatformId)
-                    .HasColumnName("platformId")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.ReqNumber)
-                    .HasColumnName("reqNumber")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.RouteStepId)
-                    .HasColumnName("routeStepId")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.ScriptFileName)
-                    .HasColumnName("scriptFileName")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.Scriptid)
-                    .HasColumnName("scriptid")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.Scriptname)
-                    .HasColumnName("scriptname")
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.Scriptrev)
-                    .HasColumnName("scriptrev")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.StationId)
-                    .HasColumnName("stationId")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.StatusId)
-                    .HasColumnName("statusId")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.TypeId)
-                    .HasColumnName("typeId")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.UpdatedBy)
-                    .HasColumnName("updatedBy")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.UpdatedEmail)
-                    .HasColumnName("updatedEmail")
-                    .HasMaxLength(45);
-
-                entity.Property(e => e.UpdatedName)
-                    .HasColumnName("updatedName")
-                    .HasMaxLength(45);
             });
             modelBuilder.Entity<AccessUserRole>(entity =>
             {
@@ -594,6 +464,57 @@ namespace API.Models
                 entity.Property(e => e.RegId)
                     .HasColumnName("regId")
                     .HasColumnType("int(11)");
+            });
+            modelBuilder.Entity<NewWorkflowRoute>(entity =>
+            {
+                entity.HasKey(e => e.WfrId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("new_workflow_route");
+
+                entity.Property(e => e.WfrId)
+                    .HasColumnName("wfrId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasColumnName("createdBy")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.CreatedEmail)
+                    .HasColumnName("createdEmail")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.CreatedName)
+                    .HasColumnName("createdName")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("isActive")
+                    .HasColumnType("int(1)");
+
+                entity.Property(e => e.RouteId)
+                    .HasColumnName("routeId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Sequence)
+                    .HasColumnName("sequence")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.TypeId)
+                    .HasColumnName("typeId")
+                    .HasColumnType("int(1)");
+
+                entity.Property(e => e.UpdatedBy)
+                    .HasColumnName("updatedBy")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.UpdatedEmail)
+                    .HasColumnName("updatedEmail")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.UpdatedName)
+                    .HasColumnName("updatedName")
+                    .HasMaxLength(45);
             });
             OnModelCreatingPartial(modelBuilder);
         }

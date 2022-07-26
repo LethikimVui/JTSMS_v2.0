@@ -15,6 +15,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using SharedObjects.Extensions;
 
 namespace JTSMS.Controllers
 {
@@ -36,14 +37,18 @@ namespace JTSMS.Controllers
         }
         public async Task<IActionResult> Search()
         {
-            ViewData["Customer"] = await commonService.Customer_Get();
+            var ntlogin = User.GetSpecificClaim("Ntlogin");
+
+            ViewData["Customer"] = await commonService.Customer_Get(ntlogin);
             ViewData["Station"] = await commonService.Station_get();
             return View();
         }
 
         public async Task<IActionResult> Insert()
         {
-            ViewData["Customer"] = await commonService.Customer_Get();
+            var ntlogin = User.GetSpecificClaim("Ntlogin");
+
+            ViewData["Customer"] = await commonService.Customer_Get(ntlogin);
             //ViewData["RouteStep"] = await commonService.Master_RouteStep_get();
             return View();
         }

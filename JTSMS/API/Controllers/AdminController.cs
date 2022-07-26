@@ -152,5 +152,58 @@ namespace API.Controllers
             }
 
         }
+
+        [HttpGet("WorkFlow_Route_get/{id}")]
+        [Obsolete]
+        public async Task<List<VWorkFlow>> WorkFlow_Route_get(int id)
+        {
+            var results = await context.Query<VWorkFlow>().AsNoTracking().FromSql(SPAdmin.WorkFlow_Route_get, id).ToListAsync();
+            return results;
+        }
+        [HttpPost("WorkFlow_Route_add")]
+        [Obsolete]
+        public async Task<IActionResult> WorkFlow_Route_add(RouteViewModel model)
+        {
+            try
+            {
+                await context.Database.ExecuteSqlCommandAsync(SPAdmin.WorkFlow_Route_add, model.TypeId, model.RouteId, model.Sequence, model.IsActive, model.UpdatedBy, model.UpdatedName, model.UpdatedEmail);
+                return Ok(new ResponseResult(200, "ok"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseResult(400, ex.Message));
+            }
+
+        }  
+        [HttpPost("Master_Route_add")]
+        [Obsolete]
+        public async Task<IActionResult> Master_Route_add(RouteViewModel model)
+        {
+            try
+            {
+                await context.Database.ExecuteSqlCommandAsync(SPAdmin.Master_Route_add, model.RouteName,model.CreatedBy, model.CreatedName, model.CreatedEmail);
+                return Ok(new ResponseResult(200, "Master_Route_add ok"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseResult(400, ex.Message));
+            }
+
+        } 
+        [HttpPost("WorkFlow_Route_update")]
+        [Obsolete]
+        public async Task<IActionResult> WorkFlow_Route_update(RouteViewModel model)
+        {
+            try
+            {
+                await context.Database.ExecuteSqlCommandAsync(SPAdmin.WorkFlow_Route_update, model.TypeId, model.RouteId, model.Sequence, model.IsActive, model.UpdatedBy, model.UpdatedName, model.UpdatedEmail);
+                return Ok(new ResponseResult(200, "ok"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseResult(400, ex.Message));
+            }
+
+        }
     }
 }

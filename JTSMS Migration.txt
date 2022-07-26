@@ -1,0 +1,34 @@
+
+
+JTSMS Migration
+
+
+
+
+
+insert into JTSMS.Detail
+(regId, scriptname, scriptrev, filehash, changeDetail, originalFileName, encriptedFileName, PcnorDevNumber, closureDate, isActive, createdBy, createdName, createdEmail, creationDate, updatedBy, updatedName, updatedEmail, updateDate)
+SELECT 
+reqId, scriptname, scriptrev, filehash, changeDetail, scriptFileName, encriptedFileName, PCNorDevNumber, closureDate, isActive, createdBy, createdName, createdEmail, creationDate, updatedBy, updatedName, updatedEmail, updateDate
+
+ FROM jtestsms.RequestDetail
+
+
+
+
+insert into JTSMS.Assembly 
+(regId, assemblyNumber, revision, isActive, creationDate, createdBy, createdName, createdEmail)
+select reqId, assemblyNumber, assemblyRevision, isActive,creationDate, createdBy, createdName, createdEmail  FROM jtestsms.RequestDetail;
+
+
+insert into JTSMS.TicketTransaction (regId, routeId, sequence, isClosed, isActive, remarks, creationDate, updatedBy, updatedName, updatedEmail, updateDate)
+SELECT rl.tkId, rl.routeId, rl.routeId, isClosed, 1, remarks, creationDate -- createdBy, createdEmail, createdName,
+,tt.updatedBy, tt.updatedName, tt.updatedEmail, tt.updateDate
+FROM jtestsms.TicketTransaction tt
+left join jtestsms.RequestLog rl on rl.tkId = tt.ticketId and rl.routeId = tt.routeId
+
+
+set sql_safe_updates = 0;
+update JTSMS.TicketTransaction
+set routeId = 0, sequence = 0
+where sequence = 4

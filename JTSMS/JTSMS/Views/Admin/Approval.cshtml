@@ -17,7 +17,7 @@
                             Administration - Approval
                         </span>
                     </div>
-                    <table class="table table-bordered table-hover table-striped">
+                    <table class="table table-bordered table-hover table-striped" style="margin: auto;width: 50% !important;">
                         <thead>
                             <tr class="text-center bold">
                                 <td>RouteId</td>
@@ -26,17 +26,11 @@
                             </tr>
                         </thead>
                         <tbody id="table-data">
-                            @*<tr class="text-center">
-                                    <td>
-                                        <select class="form-control" id="txt-roleId" required>
-                                            <option value="">--Please Select--</option>
-                                            @foreach (var item in Routes.OrderByDescending(c => c.RouteId).ToList())
-                                            {
-                                                <option value=@item.RouteId>@item.RouteName</option>
-                                            }
-                                        </select>
-                                    </td>
-                                </tr>*@
+                            <tr class="text-center">
+                                    <td>New</td>
+                                    <td><input type="text" id="txt-routename" /></td>
+                                    <td ><a id="btn-addroute" class="btn default btn-xs purple" title="Add"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                </tr>
                             @foreach (var item in Model)
                             {
                                 <tr class="text-center">

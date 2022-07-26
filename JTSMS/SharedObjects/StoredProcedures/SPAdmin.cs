@@ -23,5 +23,18 @@ namespace SharedObjects.StoredProcedures
         public static string Master_Approval_insert = "call usp_Master_Approval_insert (@p0,@p1,@p2,@p3,@p4,@p5)";
         //public static string Master_Approval_update = "usp_Master_Approval_update @p0,@p1,@p2,@p3,@p4";
         public static string Master_Approval_delete = "call usp_Master_Approval_delete (@p0,@p1)";
+
+
+        public static string Master_Route_add = "call usp_Master_Route_add (@p0,@p1,@p2,@p3)";
+
+
+
+
+        public static string WorkFlow_Route_get = "call usp_WorkFlow_Route_get (@p0)";
+        public static string WorkFlow_Route_add = "call usp_WorkFlow_Route_add (@p0,@p1,@p2,@p3,@p4,@p5,@p6)";
+        public static string WorkFlow_Route_update = "call usp_WorkFlow_Route_update (@p0,@p1,@p2,@p3,@p4,@p5,@p6)";
+
+
+
     }
 }

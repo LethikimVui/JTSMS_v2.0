@@ -8,20 +8,14 @@ $(document).ready(function () {
     email = document.getElementById('userinfo').getAttribute('data-email');
 
     function Search() {
-
         $('#tbl-content').html('');
         var model = new Object();
-
         model.CustId = $("#txt-customer-search").val() ? parseInt($("#txt-customer-search").val()) : 0;
         model.StationId = $("#txt-station-search").val() ? parseInt($("#txt-station-search").val()) : 0;
         model.PlatformId = 0// $("#txt-station-search").val() ? parseInt($("#txt-station-search").val()) : 0;
         model.TypeId = 0;
         model.ScriptId = $('#txt-scriptid-search').val() ? $('#txt-scriptid-search').val() : null;
-
-        debugger
-
         Load(model)
-
     }
     function Load(model) {
         $.ajax({
@@ -49,12 +43,11 @@ $(document).ready(function () {
             model.RouteStep = route;
             model.TypeId = type;
             model.PlatformId = platform;
-
             model.Description = $('#txt-description').val() ? $('#txt-description').val() : null;
             model.CreatedBy = user
             model.CreatedName = name
             model.CreatedEmail = email
-            debugger
+          
             $.ajax({
                 type: 'post',
                 url: '/Registration/Registration_add',

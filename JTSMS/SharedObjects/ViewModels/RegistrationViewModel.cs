@@ -42,6 +42,7 @@ namespace SharedObjects.ViewModels
         //public string File { get; set; }
         public string EncryptedFileName { get; set; }
         public string OriginalFileName { get; set; }
+        public string Evidence { get; set; }
         public string Remark { get; set; }
         public string Action { get; set; }
 

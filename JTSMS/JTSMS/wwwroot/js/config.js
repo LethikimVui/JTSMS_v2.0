@@ -30,40 +30,17 @@
             testtime: { required: "This field is required", },
         }
     });
-    //function Search() {
-    //    _commonName = $('#txt-search-input').val();
-    //    debugger
-    //    $.ajax({
-    //        type: 'post',
-    //        url: '/config/EquipmentId',
-    //        data: { commonName: _commonName },
-    //        success: function (response) {
-    //            debugger
-    //            if (response) {
-    //                //$('#txt-equipmentid').text(response);
-    //                //$('#txt-equipmentid').text(_commonName);
-    //                $('#txt-equipmentid').val(_commonName);
-    //                $('#txt-equipmentid').attr('data-id', response);
-    //                $('#modal-search').modal('hide');
-    //            }
-    //            else {
-    //                bootbox.alert("commonName is not found");
-    //            }
-    //        }
-    //    })
-
-    //}
-
+  
     function Search() {
         _commonName = $('#txt-search-input').val();
        
-        debugger
+     
         $.ajax({
             type: 'post',
             url: '/config/Search_Equipment',
             data: { commonName: _commonName },
             success: function (response) {
-                debugger
+               
                 if (response) {
                     $('#tbl-result').html(response);
                 }
@@ -82,7 +59,7 @@
         $('#txt-search-input').val(_commonName);
         $('#tbl-result').html('');
         $('#modal-search').modal('hide');
-        debugger
+     
        
     }
     function Add() {
@@ -101,7 +78,7 @@
             model.CreatedBy = user;
             model.CreatedName = name;
             model.CreatedEmail = email;
-            debugger
+         
             $.ajax({
                 type: 'post',
                 url: '/config/Insert',

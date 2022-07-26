@@ -2,6 +2,7 @@
     $('body').off('click', '#btn-detail').on('click', '#btn-detail', Load);
     $('body').off('click', '#btn-search-input').on('click', '#btn-search-input', SearchName);
     $('body').off('click', '#btn-add').on('click', '#btn-add', Add);
+    $('body').off('click', '#btn-addroute').on('click', '#btn-addroute', AddRoute);
     $('body').off('click', '#btn-delete').on('click', '#btn-delete', Delete);
 
 
@@ -17,7 +18,7 @@
         Detail(routeId)
     }
     function Detail(_routeId) {
-        debugger
+        
         $.ajax({
             type: 'get',
             url: '/Admin/Master_Approval_get_by_routeId',
@@ -26,7 +27,7 @@
             contentType: 'application/json;charset=uft-8',
             success: function (response) {
                 document.getElementById("detail").setAttribute("style", "display:inline; min-height: auto !important;");
-                debugger
+                
                 $('#lbl-title').html(routename);
                 $('#tbl-detail').html(response);
             }
@@ -34,13 +35,12 @@
     }
     function SearchName() {
         _ntid = $('#txt-search-input').val();
-        debugger
         $.ajax({
             type: 'post',
             url: '/admin/GetDisplayNameFromSamAccountName',
             data: { samAccountName: _ntid },
             success: function (response) {
-                debugger
+               
                 if (response) {
                     $('#txt-userName').text(response);
                     $('#txt-Ntlogin').val(_ntid);
@@ -60,7 +60,7 @@
         model.PlantId = 1 // parseInt(document.getElementById("txt-wc").value);
         model.CustId = parseInt(document.getElementById("txt-custid").value);
         model.CreatedBy = user;
-        debugger
+       
         $.ajax({
             type: 'post',
             url: '/admin/Master_Approval_insert',
@@ -71,7 +71,7 @@
 
                 if (data.statusCode == 200) {
                     bootbox.alert(data.message, function () {
-                        debugger
+                       
                         Detail(routeId)
                     })
                 }
@@ -84,8 +84,7 @@
     }
     function Delete() {
         approvalId = $(this).attr('data-approvalId');
-        debugger
-        //routeid = parseInt(document.getElementById('btn-add').getAttribute('data-routeid')); // parseInt($(this).attr('data-routeid'))
+        
         username = $(this).attr('data-username');
         var model = new Object();
         model.ApprovalId = parseInt(approvalId);
@@ -110,5 +109,25 @@
             }
         })
     }
-
+    function AddRoute() {
+        var model = new Object();
+        model.RouteName = $('#txt-routename').val();
+        model.CreatedBy = user;
+        model.CreatedName = name;
+        model.CreatedEmail = email;
+        $.ajax({
+            type: 'post',
+            url: '/admin/Master_Route_add',
+            data: JSON.stringify(model),
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                data = response.results;
+                if (data.statusCode == 200) {
+                    bootbox.alert(data.message, function () { location.reload() });
+                }
+                else
+                    bootbox.alert(data.message);
+            }
+        })
+    }
 })

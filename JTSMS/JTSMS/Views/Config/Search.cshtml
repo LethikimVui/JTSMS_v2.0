@@ -35,7 +35,7 @@
                             <option value=0>--Please Select--</option>
                             @foreach (var item in Station.OrderByDescending(c => c.Station).ToList())
                             {
-                                <option value=@item.StepId>@item.Station</option>
+                                <option value=@item.StationId>@item.Station</option>
                             }
                         </select>
                     </div> 
@@ -45,7 +45,7 @@
                             <option value=0>--Please Select--</option>
                             @foreach (var item in Station.OrderByDescending(c => c.Station).ToList())
                             {
-                                <option value=@item.StepId>@item.Station</option>
+                                <option value=@item.StationId>@item.Station</option>
                             }
                         </select>
                     </div>
