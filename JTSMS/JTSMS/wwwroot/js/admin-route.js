@@ -1,7 +1,5 @@
 ﻿$(document).ready(function () {
 
-
-
     $('body').off('click', '#btn-search').on('click', '#btn-search', Search);
     $('body').off('click', '#btn-save').on('click', '#btn-save', Save);
     $('body').off('click', '#btn-add').on('click', '#btn-add', Add);
@@ -10,22 +8,23 @@
     name = document.getElementById('userinfo').getAttribute('data-display-name');
     email = document.getElementById('userinfo').getAttribute('data-email');
 
+  
     function Search() {
         $('#tbl-content').html('');
-        id = $("#txt-route-search").val();
-        if (id) {
-            Load(id)
+        type = $("#txt-type-search").val();
+        if (type) {
+            Load(type)
         }
         else
-            bootbox.alert("Please select Route Name");
+            bootbox.alert("Please select Request Type");
 
     }
-    function Load(_id) {
+    function Load(_type) {
 
         $.ajax({
             type: 'get',
             url: '/Admin/Route_get',
-            data: { id: parseInt(_id) },
+            data: { id: parseInt(_type) },
             contentType: 'application/json;charset=uft-8',
             success: function (response) {
               
@@ -44,28 +43,16 @@
     }
     function Save() {
         var checkbox = $('input[type="checkbox"]')
-        var type = $('#txt-route-search').val()
+        var type = $('#txt-type-search').val()
         for (var i = 0; i < checkbox.length; i++) {
             var checked = checkbox[i].checked
-
             var routeid = checkbox[i].attributes['data-routeid'].value
-           
-
-            var sequence = $('input[type="number"]')
+            var sequence = i + 1;
             var status = true
-            for (var j = 0; j < sequence.length; j++) {
-
-                if (sequence[j].attributes['data-routeid'].value == routeid) {
-                    value = sequence[j].value
-                    console.log(routeid, value);
-
-                    status = Update(type, routeid, value, checked)
-                   
-                }
-            }
+            status = Update(type, routeid, sequence, checked)          
         }
         if (status) {
-            bootbox.alert('ok', function () { Load(type) })
+            bootbox.alert('Saved successfully', function () { Load(type) })
         }
         else {
             bootbox.alert('not ok')
@@ -98,26 +85,27 @@
         return result;
     }
 
-
     function Add() {
         var checkbox = $('input[type="checkbox"]')
-        var type = $('#txt-route-search').val()
+        var type = $('#txt-type-search').val()
+        debugger
         for (var i = 0; i < checkbox.length; i++) {
             var checked = checkbox[i].checked
 
             var routeid = checkbox[i].attributes['data-routeid'].value
            
-            var sequence = $('input[type="number"]')
+            var sequence = i+ 1 // $('input[type="number"]')
             var status = true
-            for (var j = 0; j < sequence.length; j++) {
-                if (sequence[j].attributes['data-routeid'].value == routeid) {
-                    value = sequence[j].value
-                    console.log(routeid, value);
+            status = A(type, routeid, sequence, checked)
+            //for (var j = 0; j < sequence.length; j++) {
+            //    if (sequence[j].attributes['data-routeid'].value == routeid) {
+            //        value = sequence[j].value
+            //        console.log(routeid, value);
 
-                    status = A(type, routeid, value, checked)
+            //        status = A(type, routeid, value, checked)
 
-                }
-            }
+            //    }
+            //}
         }
         if (status) {
             bootbox.alert('ok', function () { Load(type) })
@@ -152,7 +140,6 @@
         })
         return result;
     }
-
 
     $('body').on('click', '.down', function () {
 

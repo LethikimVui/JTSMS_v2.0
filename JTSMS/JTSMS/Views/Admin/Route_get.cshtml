@@ -18,9 +18,7 @@
             <tr class="text-center first-row">
                 <td>Submission</td>
                 <td> Active</td>
-                <td>
-                    @* <input id="txt-sequence" class="sequence input" type="number" value="0" data-routeid="0" style="background-color:cyan" readonly />*@
-                </td>
+                <td></td>
                 <td class="text-center">
                     <input type="checkbox" checked="checked" data-routeid="0" class="active input" disabled />
                 </td>
@@ -36,7 +34,6 @@
                             <td> @status</td>
                         }
                         <td>
-                            @* <input id="txt-sequence" class="sequence input" type="number" value="@item.Sequence" data-routeid="@item.RouteId" />*@
                             <span class="up glyphicon glyphicon-chevron-up"></span>
                             <span class="down glyphicon glyphicon-chevron-down"></span>
                         </td>
@@ -57,9 +54,9 @@
                         <td>@item.RouteName</td>
 
                         <td>Inactive</td>
-                        <td>
+                        @*<td>
                             <input id="txt-sequence" class="sequence input" type="number" data-routeid="@item.RouteId" />
-                        </td>
+                        </td>*@
                         <td>
                             <span class="up glyphicon glyphicon-chevron-up"></span>
                             <span class="down glyphicon glyphicon-chevron-down"></span>

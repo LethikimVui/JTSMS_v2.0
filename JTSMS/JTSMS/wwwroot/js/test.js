@@ -4,7 +4,7 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-    $('body').off('click', '#btn-test').on('click', '#btn-test', Test);
+    $('body').off('click', '#btn-test1').on('click', '#btn-test1', Test);
 
     function Test() {
         assy1 = $('#txt-assy').val().toUpperCase();
