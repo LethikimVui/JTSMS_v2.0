@@ -15,20 +15,18 @@
     function Search() {
         $('#tbl-content').html('');
         var custId = parseInt($("#txt-customer-search").val());
-        if (custId) {
 
 
-            var model = new Object();
+        var model = new Object();
 
-            model.CustId = custId;
-            model.RoleId = parseInt($("#txt-role-search").val());
-            model.Ntlogin = $('#txt-ntlogin-search').val() ? $('#txt-ntlogin-search').val() : null;
-          
-            Load(model)
-        }
-        else
-            bootbox.alert('Please select Customer');
+        model.CustId = custId;
+        model.RoleId = parseInt($("#txt-role-search").val());
+        model.Ntlogin = $('#txt-ntlogin-search').val() ? $('#txt-ntlogin-search').val() : null;
+
+        Load(model)
     }
+
+
     function Load(model) {
         $.ajax({
             type: 'post',
@@ -37,20 +35,20 @@
             data: JSON.stringify(model),
             contentType: 'application/json;charset=uft-8',
             success: function (response) {
-              
+
                 $('#tbl-content').html(response);
             }
         })
     }
     function SearchName() {
         _ntid = $('#txt-search-input').val();
-        
+
         $.ajax({
             type: 'post',
             url: '/admin/GetDisplayNameFromSamAccountName',
             data: { samAccountName: _ntid },
             success: function (response) {
-              
+
                 if (response) {
                     $('#txt-userName').text(response);
                     $('#txt-Ntlogin').val(_ntid);
@@ -73,7 +71,7 @@
         model.CreatedBy = user;
         model.CreatedName = name;
         model.CreatedEmail = email;
-       
+
         $.ajax({
             type: 'post',
             url: '/admin/Access_UserRole_insert',
@@ -99,14 +97,14 @@
         $(".error").html('');
         $(".error").removeClass("error");
         var Id = parseInt($(this).data('id'));
-      
+
         $.ajax({
             type: 'post',
             url: '/admin/Access_UserRole_Get_By_Id',
             dataType: 'json',
             data: { Id: Id },
             success: function (response) {
-                var data = response.results[0]              
+                var data = response.results[0]
 
                 $('#txt-ntlogin').text(data.ntlogin);
                 $('#txt-name').text(data.ntlogin);
@@ -126,7 +124,7 @@
         model.UpdatedBy = user;
         model.UpdatedName = name;
         model.UpdatedEmail = email;
-      
+
         $.ajax({
             type: 'post',
             url: '/admin/Access_UserRole_update',
@@ -135,7 +133,7 @@
             contentType: 'application/json,; charset=utf-8',
             success: function (response) {
                 var data = response.results;
-               
+
                 if (data.statusCode == 200) {
                     bootbox.alert("Save Successfully!", function () { { Load(model); } })
                 }
@@ -147,7 +145,7 @@
     }
 
     function Delete() {
-        userRoleId = $(this).attr('data-id');      
+        userRoleId = $(this).attr('data-id');
         ntlogin = $(this).attr('data-ntlogin');
         var model = new Object();
         model.UserRoleId = parseInt(userRoleId);
@@ -163,7 +161,7 @@
                 var data = response.results;
                 if (data.statusCode == 200) {
                     bootbox.alert(`${ntlogin} is deleted`, function () {
-                        model.CustId = parseInt($('#txt-customer-search').val());                     
+                        model.CustId = parseInt($('#txt-customer-search').val());
                         { Load(model); };
                     })
                 }

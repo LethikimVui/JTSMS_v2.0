@@ -20,7 +20,7 @@ namespace SharedObjects.StoredProcedures
 
 
 
-        public static string Assembly_add = "call usp_Assembly_add (@p0,@p1)";
+        public static string Assembly_add = "call usp_Assembly_add (@p0,@p1,@p2,@p3,@p4)";
         public static string Assembly_delete = "call usp_Assembly_delete (@p0)";
 
         public static string Attachment_add = "call usp_Attachment_add (@p0,@p1)";

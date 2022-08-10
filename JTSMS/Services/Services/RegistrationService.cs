@@ -17,8 +17,6 @@ namespace Services.Services
         public async Task<List<VApproval>> Approval_get(int id)
         {
             List<VApproval> results = new List<VApproval>();
-
-
             using (var response = await httpClient.GetAsync("api/Registration/Approval_get/" + id))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
@@ -27,14 +25,14 @@ namespace Services.Services
             return results;
         }
 
-        public async Task<bool> CheckAssy(string assy)
+        public async Task<List<VAssembly>> CheckAssy(string assy)
         {
-          bool responseResult = false;
-           // StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
-            using (var response = await httpClient.GetAsync("api/Registration/CheckAssy/"+ assy))
+            var responseResult = new List<VAssembly>();
+            // StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            using (var response = await httpClient.GetAsync("api/Registration/CheckAssy/" + assy))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                responseResult = JsonConvert.DeserializeObject<bool>(apiResponse);
+                responseResult = JsonConvert.DeserializeObject<List<VAssembly>>(apiResponse);
             }
             return responseResult;
         }
@@ -78,8 +76,8 @@ namespace Services.Services
         public async Task<VRequest> Registration_get_by_id(int id)
         {
             VRequest results = new VRequest();
-           // StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
-            using (var response = await httpClient.GetAsync("api/Registration/Registration_get_by_id/"+ id))
+            // StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            using (var response = await httpClient.GetAsync("api/Registration/Registration_get_by_id/" + id))
             {
                 var apiResponse = await response.Content.ReadAsStringAsync();
                 results = JsonConvert.DeserializeObject<VRequest>(apiResponse);

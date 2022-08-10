@@ -23,8 +23,8 @@
                     <div class="form-group col-md-2 pull-left">
                         <label class="text-center bold font-green-sharp" for="">Customer</label>
                         <select class="form-control" id="txt-customer-search" data-search="customer" name="customer" style="color:mediumvioletred">
-                            <option value="">--Please Select--</option>
-                            @foreach (var item in Customers.OrderByDescending(c => c.CustName).ToList())
+                            
+                            @foreach (var item in Customers.OrderBy(c => c.CustName).ToList())
                             {
                                 <option value=@item.CustId>@item.CustName</option>
                             }

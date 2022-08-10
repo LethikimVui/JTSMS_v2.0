@@ -13,6 +13,7 @@ namespace Services.Interfaces
     {
         Task<List<VUserRole>> Access_UserRole_get(UserRoleViewModel model);
         Task<List<VUserRole>> Access_UserRole_Get_By_Id(int id);
+        Task<List<VUserRole>> Access_UserRole_Get_By_regId(int id);
         Task<ResponseResult> Access_UserRole_insert(UserRoleViewModel model);
         Task<ResponseResult> Access_UserRole_update(UserRoleViewModel model);
         Task<ResponseResult> Access_UserRole_delete(UserRoleViewModel model);

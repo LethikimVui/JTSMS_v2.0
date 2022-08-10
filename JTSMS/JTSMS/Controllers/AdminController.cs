@@ -76,12 +76,10 @@ namespace JTSMS.Controllers
             }
             return DisplayName;
         }
-
         public async Task<IActionResult> Search()
         {
             var roles = await adminService.Access_Role_get();
             var ntlogin = User.GetSpecificClaim("Ntlogin");
-
             ViewData["Customers"] = await commonService.Customer_Get(ntlogin);
             ViewData["roles"] = roles;
             return View();

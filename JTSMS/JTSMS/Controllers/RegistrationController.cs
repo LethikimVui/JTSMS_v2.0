@@ -12,6 +12,8 @@ using Services.Interfaces;
 using SharedObjects.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using SharedObjects.Commons;
+using System.Data.OleDb;
+using System.Data;
 
 namespace JTSMS.Controllers
 {
@@ -21,21 +23,26 @@ namespace JTSMS.Controllers
         private readonly IRegistrationService registrationService;
         private readonly IConfiguration configuration;
         private readonly ICommonService commonService;
-
-        public RegistrationController(IRegistrationService registrationService, IConfiguration configuration, ICommonService commonService)
+        private readonly IAdminService adminService;
+        Notification notification = new Notification();
+        private ADODB.Recordset rs = new ADODB.Recordset();
+        public RegistrationController(IRegistrationService registrationService, IConfiguration configuration, ICommonService commonService, IAdminService adminService)
         {
             this.registrationService = registrationService;
             this.configuration = configuration;
             this.commonService = commonService;
+            this.adminService = adminService;
         }
+
         public async Task<IActionResult> Search()
         {
             var ntlogin = User.GetSpecificClaim("Ntlogin");
             ViewData["Customer"] = await commonService.Customer_Get(ntlogin);
             ViewData["Station"] = await commonService.Station_get();
+            ViewData["Type"] = await commonService.Type_get();
+            ViewData["Platform"] = await commonService.Master_Platform_get();
             return View();
         }
-
         public async Task<IActionResult> Registration_get([FromBody] RegistrationViewModel model)
         {
             var ntlogin = User.GetSpecificClaim("Ntlogin");
@@ -50,10 +57,8 @@ namespace JTSMS.Controllers
         public async Task<IActionResult> Registration_get_by_id(int id)
         {
             var result = await registrationService.Registration_get_by_id(id);
-            
             var Approval_get = await registrationService.Approval_get(id);
             ViewData["Approval_get"] = Approval_get;
-
             return View(result);
         }
         public async Task<IActionResult> Registration_add([FromBody] RegistrationViewModel model)
@@ -64,11 +69,28 @@ namespace JTSMS.Controllers
         public async Task<IActionResult> Registration_approve([FromBody] RegistrationViewModel model)
         {
             var results = await registrationService.Registration_approve(model);
+            var Registration_get_by_id = await registrationService.Registration_get_by_id(model.RegId);
+            var Access_UserRole_Get_By_regId = await adminService.Access_UserRole_Get_By_regId(model.RegId);
+            if (results.StatusCode == 200)
+            {
+                var Approval_get = await registrationService.Approval_get(model.RegId);
+                var approval_current = Approval_get.Where(s => s.IsClosed == 0).OrderBy(s => s.Sequence).FirstOrDefault();
+                var Cc = configuration["Email:Cc"];
+
+                notification.SentEmail_UpdateStatus(model, Registration_get_by_id, Cc, approval_current, Access_UserRole_Get_By_regId);
+            }
             return Json(new { results = results });
-        } 
+        }
+
         public async Task<IActionResult> Registration_reject([FromBody] RegistrationViewModel model)
         {
             var results = await registrationService.Registration_reject(model);
+            var Registration_get_by_id = await registrationService.Registration_get_by_id(model.RegId);
+            var Cc = configuration["Email:Cc"];
+            if (results.StatusCode == 200)
+            {
+                notification.SentEmail_UpdateStatus(model, Registration_get_by_id, Cc);
+            }
             return Json(new { results = results });
         }
         public async Task<IActionResult> CheckAssy(string assy)
@@ -89,7 +111,8 @@ namespace JTSMS.Controllers
                     var approval_current = Approval_get.Where(s => s.IsClosed == 0).OrderBy(s => s.Sequence).FirstOrDefault();
                     try
                     {
-                        Notification.SentEmail(model, approval_current);
+                        var CC = configuration["Email:Cc"];
+                        notification.SentEmail(model, approval_current, CC);
 
                     }
                     catch (Exception ex)
@@ -106,6 +129,27 @@ namespace JTSMS.Controllers
                 }
             }
             return Json(new { results = results });
+        }
+
+        public List<string> DescrText(string step_ID)
+        {
+            OleDbDataAdapter dataAdapter = new OleDbDataAdapter();
+            DataTable dt = new DataTable();
+            JEMS_3.CR_RouteSteps CRr = new JEMS_3.CR_RouteSteps();
+            rs = CRr.ListByFactoryText(configuration["JEMS:MESStaticAPIServer"], configuration["JEMS:MESDatabase"], int.Parse(configuration["JEMS:MESUser_ID"]));
+
+            rs.Filter = "Step_ID ='" + step_ID + "'";
+
+            dataAdapter.Fill(dt, rs);
+            List<string> lst = new List<string>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                var DescrText = dt.Rows[i]["DescrText"].ToString();
+                lst.Add(DescrText);
+            }
+            var lst1 = lst.Distinct().ToList();
+            lst1.Sort();
+            return lst1;
         }
         [HttpPost]
         public IActionResult Upload(UploadModel model)
@@ -141,7 +185,7 @@ namespace JTSMS.Controllers
         }
         public async Task<IActionResult> Download(string fileName, string type, string custName, string station, string assembly)
         {
-            string path = @"\\" + configuration["Server"] + @"\JTSMS\Attachment\" + type + "\\" + custName + "\\" + station + "\\" + assembly + "\\" + fileName;
+            string path = @"\\" + configuration["Server"] + @"\JTSMS\Attachment\Test\" + type + "\\" + custName + "\\" + station + "\\" + assembly + "\\" + fileName;
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))
             {

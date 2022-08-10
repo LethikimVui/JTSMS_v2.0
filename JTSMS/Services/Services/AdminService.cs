@@ -161,5 +161,16 @@ namespace Services.Services
             }
             return responseResult;
         }
+
+        public async Task<List<VUserRole>> Access_UserRole_Get_By_regId(int id)
+        {
+            List<VUserRole> userRoles = new List<VUserRole>();
+            using (var response = await httpClient.GetAsync("api/Admin/Access_UserRole_Get_By_regId/" + id))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                userRoles = JsonConvert.DeserializeObject<List<VUserRole>>(apiResponse);
+            }
+            return userRoles;
+        }
     }
 }

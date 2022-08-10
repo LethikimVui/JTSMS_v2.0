@@ -42,6 +42,8 @@ namespace API.Controllers
         {
             var registrationList = context.Registration.Where(s => s.CustId == model.CustId && s.StationId == model.StationId && s.RouteStep == model.RouteStep && s.PlatformId == model.PlatformId);
             bool isPending = registrationList.Where(s => s.TypeId == model.TypeId && s.StatusId == 1).Any();
+            var type = context.MasterType.Where(s => s.TypeId == model.TypeId).FirstOrDefault();
+            var typeName = type.Type;
             if (model.TypeId == 1) // new
             {
                 if (!isPending)
@@ -74,26 +76,35 @@ namespace API.Controllers
             }
         }
         [HttpGet("CheckAssy/{assy}")]
-        public bool CheckAssy(string assy)
+        public List<VAssembly> CheckAssy(string assy)
         {
             var assyList = context.Assembly.Where(s => s.AssemblyNumber == assy && s.IsActive == 1);
             bool isExisting = assyList.Any();
             if (!isExisting)
             {
-                return true;
+                return null;
             }
             else
             {
-                var t = from a in context.Assembly
-                        join b in context.Registration on a.RegId equals b.RegId
-                        select new
+                var table = from a in context.Assembly
+                        join r in context.Registration on a.RegId equals r.RegId into T1
+                        from m1 in T1.DefaultIfEmpty()
+                        join ms in context.MasterStatus on m1.StatusId equals ms.StatusId into T2
+                        from m2 in T2.DefaultIfEmpty()
+                        join mt in context.MasterType on m1.TypeId equals mt.TypeId into T3
+                        from m3 in T3.DefaultIfEmpty()
+                        select new VAssembly
                         {
+                            RegId = m1.RegId,
                             AssemblyNumber = a.AssemblyNumber,
-                            StatusId = b.StatusId,
-                            IsReady = b.IsReady,
-
+                            StatusId = m1.StatusId,
+                            IsReady = m1.IsReady,
+                            Status = m2.StatusName,
+                            Type = m3.Type,
                         };
-                return false;
+                var result = table.Where(s => s.AssemblyNumber == assy).ToList();
+
+                return result;
             }
 
         }
@@ -103,14 +114,14 @@ namespace API.Controllers
         {
             try
             {
-                var WorkflowRoute = context.NewWorkflowRoute.Where(s => s.TypeId == model.TypeId && s.IsActive ==1).ToList();
+                var WorkflowRoute = context.WorkflowRoute.Where(s => s.TypeId == model.TypeId && s.IsActive == 1).ToList();
                 if (WorkflowRoute.Any())
                 {
                     await context.Database.ExecuteSqlCommandAsync(SPRegistration.Registration_submit, model.RegId, model.ScriptName, model.ScriptRev, model.PcnorDevNumber, model.ChangeDetail, model.FileHash, model.OriginalFileName, model.EncryptedFileName, model.Description, model.CreatedBy, model.CreatedName, model.CreatedEmail);
                     var arr_AssemblyNumber = model.AssemblyNumber.Split('|');
                     foreach (var AssemblyNumber in arr_AssemblyNumber)
                     {
-                        await context.Database.ExecuteSqlCommandAsync(SPRegistration.Assembly_add, model.RegId, AssemblyNumber);
+                        await context.Database.ExecuteSqlCommandAsync(SPRegistration.Assembly_add, model.RegId, AssemblyNumber, model.CreatedBy, model.CreatedName, model.CreatedEmail);
                     }
                     var arr_Attachment = model.Evidence.Split('|');
 
@@ -145,7 +156,7 @@ namespace API.Controllers
                 return BadRequest(new ResponseResult(400, ex.Message));
             }
 
-        }  
+        }
         [HttpPost("Registration_reject")]
         [Obsolete]
         public async Task<IActionResult> Registration_reject(RegistrationViewModel model)

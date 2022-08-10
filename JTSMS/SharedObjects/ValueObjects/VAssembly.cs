@@ -10,5 +10,9 @@ namespace SharedObjects.ValueObjects
     {
         public int? RegId { get; set; }
         public int StatusId { get; set; }
+        public string Status { get; set; }
+        public bool? IsReady { get; set; }
+        public string AssemblyNumber { get; set; }
+        public string Type { get; set; }
     }
 }

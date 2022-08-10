@@ -3,6 +3,8 @@
     ViewData["Title"] = "Get All";
     var Customers = ViewData["Customer"] as IEnumerable<SharedObjects.ValueObjects.VCustomer>;
     var Station = ViewData["Station"] as IEnumerable<SharedObjects.ValueObjects.VStation>;
+    var Type = ViewData["Type"] as IEnumerable<SharedObjects.ValueObjects.VType>;
+    var Platform = ViewData["Platform"] as IEnumerable<SharedObjects.ValueObjects.VPlatform>;
 }
 
 <div class="container-fluid">
@@ -22,8 +24,8 @@
                     <div class="form-group col-md-2 pull-left">
                         <label class="text-center bold font-green-sharp" for="">Customer</label>
                         <select class="form-control" id="txt-customer-search" data-search="customer" name="customer" style="color:mediumvioletred">
-                            <option value="">--Please Select--</option>
-                            @foreach (var item in Customers.OrderByDescending(c => c.CustName).ToList())
+                           
+                            @foreach (var item in Customers.OrderBy(c => c.CustName).ToList())
                             {
                                 <option value=@item.CustId>@item.CustName</option>
                             }
@@ -36,6 +38,26 @@
                             @foreach (var item in Station.OrderByDescending(c => c.Station).ToList())
                             {
                                 <option value=@item.StationId>@item.Station</option>
+                            }
+                        </select>
+                    </div> 
+                    <div class="form-group col-md-2 pull-left">
+                        <label class="text-center bold font-green-sharp" for="">Type</label>
+                        <select class="form-control" id="txt-type-search" data-search="type" name="type" style="color:mediumvioletred">
+                            <option value=0>--Please Select--</option>
+                            @foreach (var item in Type.OrderByDescending(c => c.TypeId).ToList())
+                            {
+                                <option value=@item.TypeId>@item.Type</option>
+                            }
+                        </select>
+                    </div> 
+                    <div class="form-group col-md-2 pull-left">
+                        <label class="text-center bold font-green-sharp" for="">Platform</label>
+                        <select class="form-control" id="txt-platfrom-search" data-search="platfrom" name="platfrom" style="color:mediumvioletred">
+                            <option value=0>--Please Select--</option>
+                            @foreach (var item in Platform.OrderByDescending(c => c.PlatformId).ToList())
+                            {
+                                <option value=@item.PlatformId>@item.Platform</option>
                             }
                         </select>
                     </div>
@@ -77,7 +99,7 @@
             debugger
             $.ajax({
                 type: 'get',
-                url: '/request/DescrText',
+                url: '/Registration/DescrText',
                 data: { step_ID: stationId },
                 success: function (response) {
                     var data = response[2]

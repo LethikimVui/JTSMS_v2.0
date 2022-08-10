@@ -39,7 +39,7 @@ namespace API.Controllers
             var results = await context.Query<VRole>().AsNoTracking().FromSql(SPAdmin.Access_Role_get).ToListAsync();
             return results;
         }
-        
+
         [HttpPost("Access_UserRole_get")]
         [Obsolete]
         public async Task<List<VUserRole>> Access_UserRole_get(UserRoleViewModel model)
@@ -52,6 +52,14 @@ namespace API.Controllers
         public async Task<List<VUserRole>> Access_UserRole_Get_By_Id(int id)
         {
             var results = await context.Query<VUserRole>().AsNoTracking().FromSql(SPAdmin.Access_UserRole_Get_By_Id, id).ToListAsync();
+            return results;
+        }
+
+        [HttpGet("Access_UserRole_Get_By_regId/{id}")]
+        [Obsolete]
+        public async Task<List<VUserRole>> usp_Access_UserRole_Get_By_regId(int id)
+        {
+            var results = await context.Query<VUserRole>().AsNoTracking().FromSql(SPAdmin.Access_UserRole_Get_By_regId, id).ToListAsync();
             return results;
         }
 
@@ -121,7 +129,7 @@ namespace API.Controllers
         {
             try
             {
-                if (!context.MasterApproval.Where(x => (x.Ntlogin == model.Ntlogin) && (x.CustId == model.CustId) && x.RouteId ==model.RouteId && (x.IsActive == 1)).ToList().Any())
+                if (!context.MasterApproval.Where(x => (x.Ntlogin == model.Ntlogin) && (x.CustId == model.CustId) && x.RouteId == model.RouteId && (x.IsActive == 1)).ToList().Any())
                 {
                     await context.Database.ExecuteSqlCommandAsync(SPAdmin.Master_Approval_insert, model.CustId, model.RouteId, model.Ntlogin, model.UserName, model.UserEmail, model.CreatedBy);
                     return Ok(new ResponseResult(200, "User Added Successfully"));
@@ -174,22 +182,28 @@ namespace API.Controllers
                 return BadRequest(new ResponseResult(400, ex.Message));
             }
 
-        }  
+        }
         [HttpPost("Master_Route_add")]
         [Obsolete]
         public async Task<IActionResult> Master_Route_add(RouteViewModel model)
         {
             try
             {
-                await context.Database.ExecuteSqlCommandAsync(SPAdmin.Master_Route_add, model.RouteName,model.CreatedBy, model.CreatedName, model.CreatedEmail);
-                return Ok(new ResponseResult(200, "Master_Route_add ok"));
+                var isRouteExisting = context.MasterRoute.Where(s => s.RouteName == model.RouteName).Any();
+                if (!isRouteExisting)
+                {
+                    await context.Database.ExecuteSqlCommandAsync(SPAdmin.Master_Route_add, model.RouteName, model.CreatedBy, model.CreatedName, model.CreatedEmail);
+                    return Ok(new ResponseResult(200, "Master_Route_add ok"));
+                }
+                else
+                    return Conflict(new ResponseResult(209,String.Format( "Route {0} is existing", model.RouteName)));
             }
             catch (Exception ex)
             {
                 return BadRequest(new ResponseResult(400, ex.Message));
             }
 
-        } 
+        }
         [HttpPost("WorkFlow_Route_update")]
         [Obsolete]
         public async Task<IActionResult> WorkFlow_Route_update(RouteViewModel model)
@@ -197,7 +211,7 @@ namespace API.Controllers
             try
             {
                 await context.Database.ExecuteSqlCommandAsync(SPAdmin.WorkFlow_Route_update, model.TypeId, model.RouteId, model.Sequence, model.IsActive, model.UpdatedBy, model.UpdatedName, model.UpdatedEmail);
-                return Ok(new ResponseResult(200, "ok"));
+                return Ok(new ResponseResult(200, "The flow is updated!"));
             }
             catch (Exception ex)
             {

@@ -30,8 +30,9 @@ namespace API.Models
         public virtual DbSet<MasterStation> MasterStation { get; set; }
         public virtual DbSet<MasterStatus> MasterStatus { get; set; }
         public virtual DbSet<Assembly> Assembly { get; set; }
-        public virtual DbSet<NewWorkflowRoute> NewWorkflowRoute { get; set; }
-
+        public virtual DbSet<WorkflowRoute> WorkflowRoute { get; set; }
+        public virtual DbSet<MasterType> MasterType { get; set; }
+        public virtual DbSet<MasterRoute> MasterRoute { get; set; }
 
         public virtual DbQuery<VCustomer> VCustomer { get; set; }
         public virtual DbQuery<VScriptId> VScriptId { get; set; }
@@ -465,12 +466,12 @@ namespace API.Models
                     .HasColumnName("regId")
                     .HasColumnType("int(11)");
             });
-            modelBuilder.Entity<NewWorkflowRoute>(entity =>
+            modelBuilder.Entity<WorkflowRoute>(entity =>
             {
                 entity.HasKey(e => e.WfrId)
                     .HasName("PRIMARY");
 
-                entity.ToTable("new_workflow_route");
+                entity.ToTable("workflow_route");
 
                 entity.Property(e => e.WfrId)
                     .HasColumnName("wfrId")
@@ -503,6 +504,68 @@ namespace API.Models
                 entity.Property(e => e.TypeId)
                     .HasColumnName("typeId")
                     .HasColumnType("int(1)");
+
+                entity.Property(e => e.UpdatedBy)
+                    .HasColumnName("updatedBy")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.UpdatedEmail)
+                    .HasColumnName("updatedEmail")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.UpdatedName)
+                    .HasColumnName("updatedName")
+                    .HasMaxLength(45);
+            });
+            modelBuilder.Entity<MasterType>(entity =>
+            {
+                entity.HasKey(e => e.TypeId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("master_type");
+
+                entity.Property(e => e.TypeId)
+                    .HasColumnName("typeId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("isActive")
+                    .HasColumnType("tinyint(4)");
+
+                entity.Property(e => e.Type)
+                    .HasColumnName("type")
+                    .HasMaxLength(45);
+            });
+            modelBuilder.Entity<MasterRoute>(entity =>
+            {
+                entity.HasKey(e => e.RouteId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("master_route");
+
+                entity.Property(e => e.RouteId)
+                    .HasColumnName("routeId")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasColumnName("createdBy")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.CreatedEmail)
+                    .HasColumnName("createdEmail")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.CreatedName)
+                    .HasColumnName("createdName")
+                    .HasMaxLength(45);
+
+                entity.Property(e => e.IsActive)
+                    .HasColumnName("isActive")
+                    .HasColumnType("tinyint(4)");
+
+                entity.Property(e => e.RouteName)
+                    .HasColumnName("routeName")
+                    .HasMaxLength(255);
 
                 entity.Property(e => e.UpdatedBy)
                     .HasColumnName("updatedBy")
